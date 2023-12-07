@@ -6,8 +6,8 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
-//const authRoute = require("./routes/auth");
-//const userRoute = require("./routes/user");
+const authRoute = require("./routes/auth");
+const userRoute = require("./routes/user");
 dotenv.config();
 
 //middleware
@@ -47,7 +47,7 @@ async function run() {
     // Create a collection of documents
     const bookCollections = client.db("bookInvetory").collection("books");
     const userModel = client.db("bookInvetory").collection("userModel");
-
+    //alo
     // Insert a book to the db: post method
     app.post("/upload-book", async (req, res) => {
       const data = req.body;
@@ -109,25 +109,28 @@ async function run() {
     });
 
     //api Register
-    app.post("/Register", async (req, res) => {
-      // Hash password
-      const salt = await bcrypt.genSaltSync();
-      const hashedPassword = await bcrypt.hashSync(req.body.password, salt);
+    //ROUTES
+    app.use("/v1/auth", authRoute);
+    app.use("/v1/user", userRoute);
+    // app.post("/Register", async (req, res) => {
+    //   // Hash password
+    //   const salt = await bcrypt.genSaltSync();
+    //   const hashedPassword = await bcrypt.hashSync(req.body.password, salt);
 
-      // Create new user
-      const user = new userModel({
-        email: req.body.email,
-        password: hashedPassword,
-      });
-      const result = await userModel.insertOne(user);
-      // Save user
-      await user.save();
-      res.send(result);
-      // Send success response
-      // res.send({
-      //   message: "Sign up is successfully",
-      // });
-    });
+    //   // Create new user
+    //   const user = new userModel({
+    //     email: req.body.email,
+    //     password: hashedPassword,
+    //   });
+    //   const result = await userModel.insertOne(user);
+    //   // Save user
+    //   await user.save();
+    //   res.send(result);
+    //   // Send success response
+    //   // res.send({
+    //   //   message: "Sign up is successfully",
+    //   // });
+    // });
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
@@ -140,32 +143,33 @@ async function run() {
   }
 
   //api login
-  app.post("/login", (req, res) => {
-    // console.log(req.body);
-    const { email } = req.body;
-    userModel.findOne({ email: email }, (err, result) => {
-      if (result) {
-        const dataSend = {
-          _id: result._id,
-          firstName: result.firstName,
-          lastName: result.lastName,
-          email: result.email,
-          image: result.image,
-        };
-        console.log(dataSend);
-        res.send({
-          message: "Login is successfully",
-          alert: true,
-          data: dataSend,
-        });
-      } else {
-        res.send({
-          message: "Email is not available, please sign up",
-          alert: false,
-        });
-      }
-    });
-  });
+
+  // app.post("/login", (req, res) => {
+  //   // console.log(req.body);
+  //   const { email } = req.body;
+  //   userModel.findOne({ email: email }, (err, result) => {
+  //     if (result) {
+  //       const dataSend = {
+  //         _id: result._id,
+  //         firstName: result.firstName,
+  //         lastName: result.lastName,
+  //         email: result.email,
+  //         image: result.image,
+  //       };
+  //       console.log(dataSend);
+  //       res.send({
+  //         message: "Login is successfully",
+  //         alert: true,
+  //         data: dataSend,
+  //       });
+  //     } else {
+  //       res.send({
+  //         message: "Email is not available, please sign up",
+  //         alert: false,
+  //       });
+  //     }
+  //   });
+  // });
 }
 run().catch(console.dir);
 
