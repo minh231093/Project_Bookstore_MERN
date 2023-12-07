@@ -1,5 +1,6 @@
 import "bootstrap/dist/css/bootstrap.css";
-import React from "react";
+import Service from "../routers/sevise";
+import React, { useState } from "react";
 import {
   MDBBtn,
   MDBContainer,
@@ -13,7 +14,25 @@ import {
   MDBCheckbox,
 } from "mdb-react-ui-kit";
 
+const initFormValue = {
+  name: "",
+  email: "",
+  password: "",
+  confirmPass: "",
+};
+const saveUser = () => {
+  console.log("co click");
+  Service.createUser(data)
+    .then((response) => {
+      setSubmitted(true);
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+};
+
 function App() {
+  // const [formValue,setFormValue]=useState(initFormValue);
   return (
     <MDBContainer fluid className="p-3 my-5 h-custom">
       <MDBCard className="text-black">
@@ -66,7 +85,7 @@ function App() {
                 />
               </div>
 
-              <MDBBtn className="mb-4" size="lg">
+              <MDBBtn className="mb-4" size="lg" onClick={saveUser}>
                 Register
               </MDBBtn>
             </MDBCol>
