@@ -10,6 +10,9 @@ const authRoute = require("./routes/auth");
 const userRoute = require("./routes/user");
 dotenv.config();
 
+const bodyParser = require("body-parser");
+app.use(bodyParser.json());
+
 //middleware
 app.use(cookieParser());
 app.use(cors());
@@ -88,6 +91,18 @@ async function run() {
       const filter = { _id: new ObjectId(id) };
       const result = await bookCollections.deleteOne(filter);
       res.send(result);
+    });
+
+    app.delete("/delete-book/:id", async (req, res) => {
+      try {
+        const id = req.params.id;
+        const filter = { _id: new ObjectId(id) };
+        const result = await bookCollections.deleteOne(filter);
+        res.json(result);
+      } catch (error) {
+        console.error("Error deleting book:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+      }
     });
 
     // Find by category
