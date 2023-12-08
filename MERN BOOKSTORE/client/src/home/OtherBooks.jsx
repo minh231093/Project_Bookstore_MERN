@@ -15,3 +15,5 @@ const OtherBooks = () => {
     </div>
   );
 };
+
+export default OtherBooks;

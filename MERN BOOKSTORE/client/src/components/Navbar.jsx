@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+// import { Dropdown } from "flowbite-react";
 
 // react icons
 import { FaBarsStaggered, FaBlog, FaXmark } from "react-icons/fa6";
@@ -34,10 +35,8 @@ const Navbar = () => {
     { link: "Home", path: "/" },
     { link: "About", path: "/about" },
     { link: "Shop", path: "/shop" },
-    { link: "Sell Your Book", path: "/admin/dashboard" },
-    { link: "Blog", path: "/blog" },
-    { link: "Login", path: "/Login" },
-    { link: "Register", path: "/Register" },
+    { link: "Quản lý sách", path: "/admin/dashboard/manage" },
+    { link: "Tác giả", path: "/author" },
   ];
 
   return (

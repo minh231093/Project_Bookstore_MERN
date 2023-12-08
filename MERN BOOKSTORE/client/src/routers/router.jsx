@@ -1,12 +1,10 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
 import Home from "../home/Home";
 import Shop from "../shop/Shop";
 import About from "../components/About";
 import Author from "../components/Author";
 import SingleBook from "../shop/SingleBook";
-import Login from "../components/login";
-import Register from "../components/Register";
 import DashboardLayout from "../dashboard/DashboardLayout";
 import Dashboard from "../dashboard/Dashboard";
 import UploadBook from "../dashboard/UploadBook";
@@ -37,14 +35,6 @@ const router = createBrowserRouter([
       {
         path: "/admin/dashboard/manage",
         element: <ManageBook />,
-      },
-      {
-        path: "/Login",
-        element: <Login />,
-      },
-      {
-        path: "/Register",
-        element: <Register />,
       },
       {
         path: "/book/:id",
