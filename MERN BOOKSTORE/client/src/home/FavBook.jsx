@@ -1,10 +1,11 @@
-import React from "react";
+// import React from 'react'
+import FavBookImg from "../assets/banner-img/FAVBook.jpg";
 
 const FavBook = () => {
   return (
     <div className="px-4 lg:px-24 my-20">
       <div>
-        <img src={""} alt="" className="rounded md:w-10/22" />
+        <img src={FavBookImg} alt="Book" className="rounded md:w-10/22" />
       </div>
 
       <div className="md:w-1/2 space-y-6">

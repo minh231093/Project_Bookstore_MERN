@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Card, Pagination } from "flowbite-react";
 import { Link } from "react-router-dom";
 
@@ -26,16 +26,25 @@ const Shop = () => {
       <div className="grid gap-8 my-12 lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-3 grid-cols-1 ">
         {visibleBooks.map((book) => (
           <Link key={book._id} to={`/book/${book._id}`}>
-            <Card key={book._id}>
+            <Card key={book._id} className="max-w-sm text-center">
               <img src={book.imageURL} alt="" className="h-96" />
-              <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white p-5">
+              <h5
+                className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white book-card"
+                style={{ textDecoration: "none" }}
+              >
                 <p>{book.bookTitle}</p>
               </h5>
-              <p className="font-normal text-gray-700 dark:text-gray-400 description p-5">
+              <p
+                className="font-normal text-gray-700 dark:text-gray-400 description book-card"
+                style={{ textDecoration: "none" }}
+              >
                 {book.bookDescription}
               </p>
 
-              <button className="bg-blue-700 hover:bg-blue-600 font-semibold text-white py-2 rounded transition-colors duration-300">
+              <button
+                className="bg-blue-700 hover:bg-blue-600 font-semibold text-white py-2 rounded transition-colors duration-300 book-card"
+                style={{ textDecoration: "none" }}
+              >
                 Mua sách
               </button>
             </Card>

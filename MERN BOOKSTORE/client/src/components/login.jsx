@@ -1,4 +1,4 @@
-import React from "react";
+// import React from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import "../App.css";
 import {
@@ -18,7 +18,7 @@ function App() {
         <MDBCol col="10" md="6">
           <img
             src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
-            class="img-fluid"
+            className="img-fluid"
             alt="Sample image"
           />
         </MDBCol>
@@ -74,7 +74,7 @@ function App() {
               Login
             </MDBBtn>
             <p className="small fw-bold mt-2 pt-1 mb-2">
-              Don't have an account?{" "}
+              Dont have an account?{" "}
               <a href="http://localhost:5173/Register" className="link-danger">
                 Register
               </a>

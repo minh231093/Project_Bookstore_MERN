@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react";
 import BookCards from "../components/BookCards";
 
-const BestSellerBooks = () => {
+const OtherBooks = () => {
   const [books, setBooks] = useState([]);
 
   useEffect(() => {
     fetch("http://localhost:5000/all-books")
       .then((res) => res.json())
-      .then((data) => setBooks(data.slice(4, 8)));
+      .then((data) => setBooks(data.slice(4, 12)));
   }, []);
   return (
     <div>
-      <BookCards books={books} headline="Best seller books" />
+      <BookCards books={books} headline="Other books" />
     </div>
   );
 };
 
-export default BestSellerBooks;
+export default OtherBooks;

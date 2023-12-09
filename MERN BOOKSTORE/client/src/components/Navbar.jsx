@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+// import { Dropdown } from "flowbite-react";
 
 // react icons
 import { FaBarsStaggered, FaBlog, FaXmark } from "react-icons/fa6";
@@ -7,6 +8,8 @@ import { FaBarsStaggered, FaBlog, FaXmark } from "react-icons/fa6";
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
+
+  // const [isUploadMenuOpen, setUploadMenuOpen] = useState(false);
 
   // Toggle Menu
   const ToggleMenu = () => {
@@ -34,8 +37,8 @@ const Navbar = () => {
     { link: "Home", path: "/" },
     { link: "About", path: "/about" },
     { link: "Shop", path: "/shop" },
-    { link: "Sell Your Book", path: "/admin/dashboard" },
-    { link: "Blog", path: "/blog" },
+    { link: "Quản lý sách", path: "/admin/dashboard/manage" },
+    { link: "Tác giả", path: "/author" },
     { link: "Login", path: "/Login" },
     { link: "Register", path: "/Register" },
   ];
@@ -51,7 +54,7 @@ const Navbar = () => {
           {/* logo */}
           <Link
             to="/"
-            className="text-2x1 font-bold text-blue-700 flex items-center gap-2"
+            className="text-2x1 font-bold text-blue-700 flex items-center gap-2 nav-link"
           >
             <FaBlog className="inline-block" />
             Books
@@ -63,7 +66,7 @@ const Navbar = () => {
               <Link
                 key={path}
                 to={path}
-                className="block text-base text-black uppercase cursor-pointer hover:text-blue-700"
+                className="block text-base text-black uppercase cursor-pointer hover:text-blue-700 nav-link"
               >
                 {link}
               </Link>
@@ -101,7 +104,7 @@ const Navbar = () => {
               <Link
                 key={path}
                 to={path}
-                className="block text-base text-white uppercase cursor-pointer"
+                className="block text-base text-white uppercase cursor-pointer nav-link"
               >
                 {link}
               </Link>
