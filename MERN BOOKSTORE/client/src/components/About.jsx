@@ -1,5 +1,6 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.css";
+import AboutUs from "../home/AboutUs";
 
 // import {
 //   MDBContainer,
@@ -99,6 +100,10 @@ export default function About() {
         backgrounds can unite, explore new literary works, express their
         opinions, and build connections with kindred spirits.
       </p>
+      <div>
+        <AboutUs></AboutUs>
+      </div>
+      <br />
       <h2 className="text-2xl font-bold mb-4 text-slate-800 text-center">
         We have faith in the ability of books to motivate, enlighten, and change
         lives. Come join us on the bBooks platform and embark on a literary
