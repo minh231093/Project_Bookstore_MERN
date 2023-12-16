@@ -1,5 +1,6 @@
 import { useState } from "react";
 // import { Button, Textarea, Label, TextInput } from "flowbite-react";
+import { Button, Form } from "react-bootstrap";
 
 const UploadBook = () => {
   const bookCategories = [
@@ -35,26 +36,21 @@ const UploadBook = () => {
       !form.bookTitle.value ||
       !form.authorName.value ||
       !form.imageURL.value ||
+      !form.price.value ||
       !form.bookPdfUrl.value
     ) {
       alert("Please fill in all required fields");
       return;
     }
 
-    const bookTitle = form.bookTitle.value;
-    const authorName = form.authorName.value;
-    const imageURL = form.imageURL.value;
-    const category = form.category.value;
-    const bookDescription = form.bookDescription.value;
-    const bookPdfUrl = form.bookPdfUrl.value;
-
     const bookObj = {
-      bookTitle,
-      authorName,
-      imageURL,
-      category,
-      bookDescription,
-      bookPdfUrl,
+      bookTitle: form.bookTitle.value,
+      authorName: form.authorName.value,
+      imageURL: form.imageURL.value,
+      category: form.category.value,
+      bookDescription: form.bookDescription.value,
+      price: form.price.value,
+      bookPdfUrl: form.bookPdfUrl.value,
     };
 
     console.log(bookObj);
@@ -77,82 +73,57 @@ const UploadBook = () => {
   };
 
   return (
-    <div className="px-4 my-12 w-full max-w-2xl">
+    <div className="px-4 my-36 w-full max-w-2xl">
       <h2 className="mb-8 text-3xl font-bold">Upload Sách</h2>
-      <form onSubmit={handleSubmit} className="space-y-12">
+      <Form onSubmit={handleSubmit} className="space-y-12">
         <div className="space-y-12">
           <div className="border-b border-gray-900/10 pb-12">
             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
               <div className="sm:col-span-4">
-                <label
-                  htmlFor="bookTitle"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Tên sách
-                </label>
-                <div className="mt-2">
-                  <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                    <input
-                      type="text"
-                      name="bookTitle"
-                      id="bookTitle"
-                      required
-                      className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                      placeholder="Nhập tên sách"
-                    />
-                  </div>
-                </div>
+                <Form.Group controlId="bookTitle">
+                  <Form.Label>Tên sách</Form.Label>
+                  <Form.Control
+                    type="text"
+                    id="bookTitle"
+                    name="bookTitle"
+                    required
+                    placeholder="Nhập tên sách"
+                  />
+                </Form.Group>
               </div>
 
               <div className="sm:col-span-4">
-                <label
-                  htmlFor="authorName"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Tác giả
-                </label>
-                <div className="mt-2">
-                  <input
+                <Form.Group controlId="authorName">
+                  <Form.Label>Tác giả</Form.Label>
+                  <Form.Control
+                    type="text"
                     id="authorName"
                     name="authorName"
-                    type="text"
                     required
                     placeholder="Tên tác giả"
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
-                </div>
+                </Form.Group>
               </div>
 
               <div className="sm:col-span-3">
-                <label
-                  htmlFor="imageURL"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Hình ảnh minh họa
-                </label>
-                <div className="mt-2">
-                  <input
+                <Form.Group controlId="imageURL">
+                  <Form.Label>Hình ảnh minh họa</Form.Label>
+                  <Form.Control
+                    type="text"
                     id="imageURL"
                     name="imageURL"
-                    type="text"
                     required
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    placeholder="Link hình ảnh"
                   />
-                </div>
+                </Form.Group>
               </div>
 
               <div className="sm:col-span-3">
-                <label
-                  htmlFor="inputState"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Thể loại
-                </label>
-                <div className="mt-2">
-                  <select
-                    id="inputState"
+                <Form.Group controlId="inputState">
+                  <Form.Label>Thể loại</Form.Label>
+                  <Form.Control
+                    as="select"
                     name="category"
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                     value={selectedCategory}
                     onChange={handleCategoryChange}
                   >
@@ -161,66 +132,67 @@ const UploadBook = () => {
                         {option}
                       </option>
                     ))}
-                  </select>
-                </div>
+                  </Form.Control>
+                </Form.Group>
               </div>
 
               <div className="col-span-full">
-                <label
-                  htmlFor="bookDescription"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Tóm tắt nội dung
-                </label>
-                <div className="mt-2">
-                  <textarea
-                    id="bookDescription"
-                    name="bookDescription"
-                    rows="6"
+                <Form.Group controlId="bookDescription">
+                  <Form.Label>Tóm tắt nội dung</Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    rows={6}
                     required
-                    type="text"
                     placeholder="Nội dung"
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  ></textarea>
-                </div>
+                  />
+                </Form.Group>
               </div>
 
               <div className="sm:col-span-3">
-                <label
-                  htmlFor="bookPdfUrl"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Link PDF sách
-                </label>
-                <div className="mt-2">
-                  <input
+                <Form.Group controlId="price">
+                  <Form.Label>Giá bán</Form.Label>
+                  <Form.Control
+                    type="text"
+                    id="price"
+                    name="price"
+                    required
+                    placeholder="Giá"
+                  />
+                </Form.Group>
+              </div>
+
+              <div className="sm:col-span-3">
+                <Form.Group controlId="bookPdfUrl">
+                  <Form.Label>Link PDF sách</Form.Label>
+                  <Form.Control
+                    type="url"
                     id="bookPdfUrl"
                     name="bookPdfUrl"
-                    type="url"
                     required
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    placeholder="Link PDF"
                   />
-                </div>
+                </Form.Group>
               </div>
             </div>
           </div>
 
           <div className="mt-6 flex items-center justify-end gap-x-6">
-            <button
-              type="button"
-              className="text-sm font-semibold leading-6 text-gray-900"
+            <Button
+              variant="outline-danger"
+              style={{ width: "100px", borderRadius: "10px" }}
             >
               Hủy
-            </button>
-            <button
+            </Button>
+            <Button
               type="submit"
-              className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              variant="outline-info"
+              style={{ width: "100px", borderRadius: "10px" }}
             >
               Lưu
-            </button>
+            </Button>
           </div>
         </div>
-      </form>
+      </Form>
     </div>
   );
 };

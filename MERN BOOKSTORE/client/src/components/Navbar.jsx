@@ -9,6 +9,8 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
 
+  // const [isUploadMenuOpen, setUploadMenuOpen] = useState(false);
+
   // Toggle Menu
   const ToggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -35,8 +37,10 @@ const Navbar = () => {
     { link: "Home", path: "/" },
     { link: "About", path: "/about" },
     { link: "Shop", path: "/shop" },
-    { link: "Quản lý sách", path: "/admin/dashboard/manage" },
+    { link: "Quản lý trang web", path: "/admin/dashboard/manage" },
     { link: "Tác giả", path: "/author" },
+    { link: "Login", path: "/Login" },
+    { link: "Register", path: "/Register" },
   ];
 
   return (
@@ -50,7 +54,7 @@ const Navbar = () => {
           {/* logo */}
           <Link
             to="/"
-            className="text-2x1 font-bold text-blue-700 flex items-center gap-2"
+            className="text-2x1 font-bold text-blue-700 flex items-center gap-2 nav-link"
           >
             <FaBlog className="inline-block" />
             Books
@@ -62,7 +66,7 @@ const Navbar = () => {
               <Link
                 key={path}
                 to={path}
-                className="block text-base text-black uppercase cursor-pointer hover:text-blue-700"
+                className="block text-base text-black uppercase cursor-pointer hover:text-blue-700 nav-link"
               >
                 {link}
               </Link>
@@ -100,7 +104,7 @@ const Navbar = () => {
               <Link
                 key={path}
                 to={path}
-                className="block text-base text-white uppercase cursor-pointer"
+                className="block text-base text-white uppercase cursor-pointer nav-link"
               >
                 {link}
               </Link>

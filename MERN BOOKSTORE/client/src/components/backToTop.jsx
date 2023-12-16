@@ -1,4 +1,4 @@
-import React from "react";
+// import React from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import { MDBBtn, MDBContainer, MDBIcon } from "mdb-react-ui-kit";
 
@@ -36,6 +36,7 @@ function App() {
           bottom: "20px",
           right: "20px",
           display: "none",
+          zIndex: "99",
         }}
         className="btn-floating"
         color="danger"
