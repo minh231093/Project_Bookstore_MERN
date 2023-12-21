@@ -1,133 +1,100 @@
-import React from "react";
-import "bootstrap/dist/css/bootstrap.css";
-import "../App.css";
-import {
-  MDBContainer,
-  MDBCol,
-  MDBRow,
-  MDBBtn,
-  MDBIcon,
-  MDBInput,
-  MDBCheckbox,
-} from "mdb-react-ui-kit";
+import React, { useContext, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../contects/AuthProvider';
+import googleLogo from '../assets/banner-img/googleLogo.png'
 
-function App() {
-  return (
-    <MDBContainer fluid className="p-3 my-5 h-custom">
-      <MDBRow>
-        <MDBCol col="10" md="6">
-          <img
-            src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
-            class="img-fluid"
-            alt="Sample image"
-          />
-        </MDBCol>
+const Login = () => {
 
-        <MDBCol col="4" md="6">
-          <div className="d-flex flex-row align-items-center justify-content-center">
-            <p className="lead fw-normal mb-0 me-3">Sign in with</p>
+    const { login, loginWithGoogle } = useContext(AuthContext);
+    const [error, serError] = useState("");
 
-            <MDBBtn floating size="md" tag="a" className="me-2">
-              <MDBIcon fab icon="facebook-f" />
-            </MDBBtn>
+    const location = useLocation();
+    const navigate = useNavigate();
 
-            <MDBBtn floating size="md" tag="a" className="me-2">
-              <MDBIcon fab icon="twitter" />
-            </MDBBtn>
+    const from = location.state?.from?.pathname || "/";
 
-            <MDBBtn floating size="md" tag="a" className="me-2">
-              <MDBIcon fab icon="linkedin-in" />
-            </MDBBtn>
-          </div>
+    const handleLogin = (event) => {
+        event.preventDefault();
+        const form = event.target;
+        const email = form.email.value;
+        const password = form.password.value;
+        login(email, password).then((userCredential) => {
+            // Signed in 
+            const user = userCredential.user;
+            alert("Đăng nhập thành công");
+            navigate(from, {replace: true});
+            // ...
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            serError(errorMessage)
+          });
 
-          <div className="divider d-flex align-items-center my-4">
-            <p className="text-center fw-bold mx-3 mb-0">Or</p>
-          </div>
+        createUser(email, password).then((userCredential) => {
+            // Signed up 
+            const user = userCredential.user;
+            alert("Đăng ký tài khoản thành công!");
+            navigate(from, { replace: true });
+            // ...
+        })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                serError(errorMessage);
+                // ..
+            });
+    }
 
-          <MDBInput
-            wrapperClass="mb-4"
-            label="Email address"
-            id="formControlLg"
-            type="email"
-            size="lg"
-          />
-          <MDBInput
-            wrapperClass="mb-4"
-            label="Password"
-            id="formControlLg"
-            type="password"
-            size="lg"
-          />
+    // signup using google account
+    const handleRegister = () => {
+        loginWithGoogle().then((result) => {
+            const user = result.user;
+            alert("Đăng ký tài khoản thành công!");
+            navigate(from, { replace: true });
+        }).catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            serError(errorMessage);
+            // ..
+        });
+    }
 
-          <div className="d-flex justify-content-between mb-4">
-            <MDBCheckbox
-              name="flexCheck"
-              value=""
-              id="flexCheckDefault"
-              label="Remember me"
-            />
-            <a href="!#">Forgot password?</a>
-          </div>
+    return (
+        <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
+            <div className="relative py-3 sm:max-w-xl sm:mx-auto">
+                <div
+                    className="absolute inset-0 bg-gradient-to-r from-blue-300 to-blue-600 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl">
+                </div>
+                <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
+                    <div className="max-w-md mx-auto">
+                        <div>
+                            <h1 className="text-3xl font-semibold">Đăng ký tài khoản</h1>
+                        </div>
+                        <div className="divide-y divide-gray-200">
+                            <form onSubmit={handleLogin} className="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
+                                <div className="relative">
+                                    <input id="email" name="email" type="text" className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Email address" />
+                                </div>
+                                <div className="relative">
+                                    <input id="password" name="password" type="password" className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Password" />
+                                </div>
+                                {error ? <p className='text-red-600 text-base'>Email hoặc mật khẩu không chính xác. Vui lòng nhập lại</p> : ""}
+                                <div className="flex justify-center py-2">
+                                    <button className="bg-blue-500 text-white rounded-md px-8 py-2">Đăng nhập ngay</button>
+                                </div>
+                            </form>
+                        </div>
 
-          <div className="text-center text-md-start mt-4 pt-2">
-            <MDBBtn className="mb-0 px-5" size="lg">
-              Login
-            </MDBBtn>
-            <p className="small fw-bold mt-2 pt-1 mb-2">
-              Don't have an account?{" "}
-              <a href="http://localhost:5173/Register" className="link-danger">
-                Register
-              </a>
-            </p>
-          </div>
-        </MDBCol>
-      </MDBRow>
-
-      <div className="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-4 px-4 px-xl-5 bg-primary">
-        <div className="text-white mb-3 mb-md-0">
-          Copyright © 2020. All rights reserved.
+                        <hr className='border-t-2 border-b-slate-950' />
+                        <div>
+                            <button onClick={handleRegister} className='flex items-center text-xl mt-6'><img src={googleLogo} alt='' className="w-6 h-6 mx-2" />Đăng nhập với Google</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <div>
-          <MDBBtn
-            tag="a"
-            color="none"
-            className="mx-3"
-            style={{ color: "white" }}
-          >
-            <MDBIcon fab icon="facebook-f" size="md" />
-          </MDBBtn>
-
-          <MDBBtn
-            tag="a"
-            color="none"
-            className="mx-3"
-            style={{ color: "white" }}
-          >
-            <MDBIcon fab icon="twitter" size="md" />
-          </MDBBtn>
-
-          <MDBBtn
-            tag="a"
-            color="none"
-            className="mx-3"
-            style={{ color: "white" }}
-          >
-            <MDBIcon fab icon="google" size="md" />
-          </MDBBtn>
-
-          <MDBBtn
-            tag="a"
-            color="none"
-            className="mx-3"
-            style={{ color: "white" }}
-          >
-            <MDBIcon fab icon="linkedin-in" size="md" />
-          </MDBBtn>
-        </div>
-      </div>
-    </MDBContainer>
-  );
+    )
 }
 
-export default App;
+export default Login

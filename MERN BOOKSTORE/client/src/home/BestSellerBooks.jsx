@@ -1,19 +1,17 @@
-import React, { useEffect, useState } from "react";
-import BookCards from "../components/BookCards";
+import React, { useEffect, useState } from 'react'
+import BookCards from '../components/BookCards';
 
 const BestSellerBooks = () => {
-  const [books, setBooks] = useState([]);
+    const [books, setBooks] = useState([]);
 
-  useEffect(() => {
-    fetch("http://localhost:5000/all-books")
-      .then((res) => res.json())
-      .then((data) => setBooks(data));
-  }, []);
+    useEffect( () => {
+        fetch("http://localhost:5000/all-books").then(res => res.json()).then(data => setBooks(data.slice(0, 8)))
+    }, []);
   return (
     <div>
-      <BookCards books={books} headline="Best seller books" />
+        <BookCards books={books} headline="Những đầu sách bán chạy nhất"/>
     </div>
-  );
-};
+  )
+}
 
-export default BestSellerBooks;
+export default BestSellerBooks

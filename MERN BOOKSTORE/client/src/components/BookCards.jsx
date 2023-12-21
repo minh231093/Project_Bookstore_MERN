@@ -15,10 +15,10 @@ import { Link } from 'react-router-dom';
 import { FaCartShopping } from 'react-icons/fa6'
 
 const BookCards = ({ headline, books }) => {
-  console.log(books);
+  //console.log(books);
 
   return (
-    <div className='my-16 px-4 lg:px-24'>
+    <div className='my-8 px-4 lg:px-24'>
       <h2 className='text-5xl text-center font-bold text-black my-5'>{headline}</h2>
 
       {/* Cards */}
@@ -57,8 +57,8 @@ const BookCards = ({ headline, books }) => {
                 </div>
                 <div>
                   <div>
-                    <h3>{book.bookTitle}</h3>
-                    <p>{book.authorName}</p>
+                    <h3 className='font-semibold'>{book.bookTitle}</h3>
+                    <p className='italic'>--{book.authorName}--</p>
                   </div>
                   <div>
                     <p>$10.00</p>
@@ -67,6 +67,7 @@ const BookCards = ({ headline, books }) => {
               </Link>
             </SwiperSlide>)
           }
+          <div className='w-full h-12'></div>
         </Swiper>
       </div>
     </div>
