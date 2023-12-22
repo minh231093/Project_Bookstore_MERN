@@ -193,7 +193,11 @@ const Shop = () => {
       <div className="grid gap-8 my-12 lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-3 grid-cols-1">
         {visibleBooks.map((book) => (
           <Link key={book._id} to={{ pathname: `/book/${book._id}` }}>
-            <Card key={book._id} className="max-w-xs auto text-center">
+            <Card
+              key={book._id}
+              className="max-w-xs auto text-center"
+              style={{ height: "650px" }}
+            >
               <img src={book.imageURL} alt="" className="h-96" />
               <h5
                 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white book-card"

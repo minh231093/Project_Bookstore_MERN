@@ -40,7 +40,7 @@ const Navbar = () => {
     { link: "Quản lý trang web", path: "/admin/dashboard/manage" },
     { link: "Tác giả", path: "/author" },
     { link: "Login", path: "/Login" },
-    { link: "Register", path: "/Register" },
+    { link: "Signup", path: "/Signup" },
   ];
 
   return (

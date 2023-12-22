@@ -2,7 +2,6 @@ import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
 import Home from "../home/Home";
 import Shop from "../shop/Shop";
-import About from "../components/About";
 import Author from "../components/Author";
 import AuthorDetail from "../components/AuthorDetail";
 import SingleBook from "../shop/SingleBook";
@@ -11,11 +10,13 @@ import Dashboard from "../dashboard/Dashboard";
 import UploadBook from "../dashboard/UploadBook";
 import ManageBook from "../dashboard/ManageBook";
 import EditBook from "../dashboard/EditBook";
-import Login from "../components/login";
-import Register from "../components/Register";
+import Login from "../components/Login";
+import Signup from "../components/Signup";
 import CreateAuthor from "../dashboard/CreateAuthor";
 import EditAuthor from "../dashboard/EditAuthor";
 import ManageAuthor from "../dashboard/ManageAuthor";
+import SignIn from "../account/SignIn";
+import SignUp from "../account/SignUp";
 
 const router = createBrowserRouter([
   {
@@ -31,10 +32,6 @@ const router = createBrowserRouter([
         element: <Shop />,
       },
       {
-        path: "/about",
-        element: <About />,
-      },
-      {
         path: "/author",
         element: <Author />,
       },
@@ -43,12 +40,12 @@ const router = createBrowserRouter([
       //   element: <ManageBook />,
       // },
       {
-        path: "/Login",
-        element: <Login />,
+        path: "/account/signin",
+        element: <SignIn />,
       },
       {
-        path: "/Register",
-        element: <Register />,
+        path: "/account/signup",
+        element: <SignUp />,
       },
       {
         path: "/book/:id",
@@ -74,6 +71,14 @@ const router = createBrowserRouter([
         },
       },
     ],
+  },
+  {
+    path: "/Signup",
+    element: <Signup />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
   },
 
   {

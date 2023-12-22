@@ -3,8 +3,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../contacts/AuthProvider";
 import googleLogo from "../assets/banner-img/googleLogo.png";
 
-const Login = () => {
-  const { login, loginWithGoogle } = useContext(AuthContext);
+const Signup = () => {
+  const { createUser, loginWithGoogle } = useContext(AuthContext);
   const [error, serError] = useState("Lỗi");
 
   const location = useLocation();
@@ -12,23 +12,11 @@ const Login = () => {
 
   const from = location.state?.from?.pathname || "/";
 
-  const handleLogin = (event) => {
+  const handleSignUp = (event) => {
     event.preventDefault();
     const form = event.target;
     const email = form.email.value;
     const password = form.password.value;
-    login(email, password)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        alert("Đăng nhập thành công");
-        navigate(from, { replace: true });
-        // ...
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-      });
 
     createUser(email, password)
       .then((userCredential) => {
@@ -69,11 +57,11 @@ const Login = () => {
         <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
           <div className="max-w-md mx-auto">
             <div>
-              <h1 className="text-3xl font-semibold">Đăng Nhập </h1>
+              <h1 className="text-3xl font-semibold">Đăng ký tài khoản</h1>
             </div>
             <div className="divide-y divide-gray-200">
               <form
-                onSubmit={handleLogin}
+                onSubmit={handleSignUp}
                 className="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7"
               >
                 <div className="relative">
@@ -96,7 +84,7 @@ const Login = () => {
                 </div>
                 <div className="flex justify-center py-2">
                   <button className="bg-blue-500 text-white rounded-md px-8 py-2">
-                    Đăng nhập
+                    Đăng ký ngay
                   </button>
                 </div>
               </form>
@@ -119,4 +107,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;

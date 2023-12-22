@@ -6,9 +6,6 @@ const bodyParser = require("body-parser");
 
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
-const cookieParser = require("cookie-parser");
-const authRoute = require("./routes/auth");
-const userRoute = require("./routes/user");
 dotenv.config();
 
 //middleware
@@ -42,7 +39,10 @@ async function run() {
     // Create a collection of documents
     const bookCollections = client.db("bookInvetory").collection("books");
 
+    // const authorCollections = client.db("bookInvetory").collection("authors");
     const authorCollections = client.db("authorList").collection("authors");
+
+    const reviewCollections = client.db("bookInvetory").collection("reviews");
 
     //Book sector
     // Insert a book to the db: post method
@@ -85,7 +85,7 @@ async function run() {
         const id = req.params.id;
         const filter = { _id: new ObjectId(id) };
         const result = await bookCollections.deleteOne(filter);
-        res.json(result);
+        res.send(result);
       } catch (error) {
         console.error("Error deleting book:", error);
         res.status(500).json({ error: "Internal Server Error" });
@@ -139,8 +139,22 @@ async function run() {
       try {
         const id = req.params.id;
         const filter = { _id: new ObjectId(id) };
-        const result = await bookCollections.findOne(filter);
-        res.send(result);
+        // const result = await bookCollections.findOne(filter);
+        const result = await bookCollections
+          .aggregate([
+            { $match: filter },
+            {
+              $lookup: {
+                from: "reviews",
+                localField: "_id",
+                foreignField: "bookId",
+                as: "review",
+              },
+            },
+          ])
+          .toArray();
+        console.log(result);
+        res.send(result[0]);
       } catch (error) {
         console.error("Error fetching book by ID:", error);
         res.status(500).send("Internal Server Error");
@@ -156,7 +170,7 @@ async function run() {
         const query = { category: { $in: categories } };
 
         const result = await bookCollections.find(query).toArray();
-        res.json(result);
+        res.send(result);
       } catch (error) {
         console.error("Error fetching books by category:", error);
         res.status(500).json({ error: "Internal Server Error" });
@@ -172,7 +186,7 @@ async function run() {
         const query = { bookTitle: { $regex: new RegExp(title, "i") } };
         const result = await bookCollections.find(query).toArray();
 
-        res.json(result);
+        res.send(result);
       } catch (error) {
         console.error("Error fetching books by title:", error);
         res.status(500).json({ error: "Internal Server Error" });
@@ -213,14 +227,14 @@ async function run() {
         const id = req.params.id;
         const filter = { _id: new ObjectId(id) };
         const result = await authorCollections.deleteOne(filter);
-        res.json(result);
+        res.send(result);
       } catch (error) {
         console.error("Error deleting author:", error);
         res.status(500).json({ error: "Internal Server Error" });
       }
     });
 
-    // To get single author data
+    // Get single author data
     app.get("/author/:id", async (req, res) => {
       const id = req.params.id;
       const filter = { _id: new ObjectId(id) };
@@ -235,10 +249,81 @@ async function run() {
       res.send(result);
     });
 
-    //api Register
-    //ROUTES
-    app.use("/v1/auth", authRoute);
-    app.use("/v1/user", userRoute);
+    //Review sector
+    //add review
+    // app.post("/add-review", async (req, res) => {
+    //   const data = req.body;
+    //   data.bookId = new ObjectId(data.bookId);
+    //   const result = await reviewCollections.insertOne(data);
+    //   res.send(result);
+    // });
+
+    app.post("/add-review", async (req, res) => {
+      try {
+        const data = req.body;
+        console.log(data);
+        data.bookId = new ObjectId(data.bookId);
+        const result = await reviewCollections.insertOne(data);
+        res.send(result.ops[0]);
+      } catch (error) {
+        console.error("Error adding review:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+      }
+    });
+
+    app.get("/reviews", async (req, res) => {
+      try {
+        const bookId = req.query.bookId;
+        const review = await reviewCollections
+          .find({ bookId: new ObjectId(bookId) })
+          .toArray();
+        res.json(review);
+      } catch (error) {
+        console.error("Error fetching reviews:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+      }
+    });
+
+    // Get all review from the database
+    // app.get("/reviews", async (req, res) => {
+    //   const bookId = req.query.bookId;
+    //   const review = reviewCollections.find({ bookId: new ObjectId(bookId) });
+    //   const result = await review.toArray();
+    //   res.send(result);
+    // });
+
+    // Update review data: patch methods
+    app.patch("/review/:id", async (req, res) => {
+      const id = req.params.id;
+      const updateReview = req.body;
+      const filter = { _id: new ObjectId(id) };
+      const updateDoc = {
+        $set: {
+          ...updateReview,
+        },
+      };
+      const options = { upsert: true };
+      // Update
+      const result = await reviewCollections.updateOne(
+        filter,
+        updateDoc,
+        options
+      );
+      res.send(result);
+    });
+
+    //delete an review with id HoangMinh
+    app.delete("/delete-review/:id", async (req, res) => {
+      try {
+        const id = req.params.id;
+        const filter = { _id: new ObjectId(id) };
+        const result = await reviewCollections.deleteOne(filter);
+        res.send(result);
+      } catch (error) {
+        console.error("Error deleting review:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+      }
+    });
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
