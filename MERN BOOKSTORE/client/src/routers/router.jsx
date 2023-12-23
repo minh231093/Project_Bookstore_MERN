@@ -14,14 +14,13 @@ import Dashboard from "../dashboard/Dashboard";
 import UploadBook from "../dashboard/UploadBook";
 import ManageBook from "../dashboard/ManageBook";
 import EditBook from "../dashboard/EditBook";
-import Signup from "../components/Signup";
 import CreateAuthor from "../dashboard/CreateAuthor";
 import EditAuthor from "../dashboard/EditAuthor";
 import ManageAuthor from "../dashboard/ManageAuthor";
 import SignIn from "../account/SignIn";
 import SignUp from "../account/SignUp";
 import Signup from "../components/Signup";
-import Login from "../components/Login";
+import Login from "../components/login";
 import Logout from "../components/Logout";
 
 const router = createBrowserRouter([
@@ -79,7 +78,7 @@ const router = createBrowserRouter([
     ],
   {
     path: "/Signup",
-    element: <Signup />,
+    element: <Signup/>,
   },
   {
     path: "/login",
