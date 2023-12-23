@@ -38,11 +38,11 @@ const Navbar = () => {
         {link: "Trang chủ", path: "/"},
         {link: "Về chúng tôi", path: "/about"},
         {link: "Thế giới sách", path: "/shop"},
-        {link: "Nơi đăng bán sách", path: "/account/dashboard"},
+        {link: "Quản lý trang web", path: "/admin/dashboard/manage"},
+        {link: "Tác giả", path: "/author"},
         // {link: "Blog", path: "/blog"},
         //{link: "Đăng nhập", path: "/account/signin"}
     ]
-
 
   return (
     <header className='w-full bg-transparent fixed top-0 left-0 right-0 transition-all ease-in duration-300'>
