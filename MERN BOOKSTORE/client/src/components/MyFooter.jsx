@@ -23,7 +23,7 @@ const MyFooter = () => {
               </Footer.LinkGroup>
             </div>
             <div>
-              <Footer.Title title="Theo dõi Books" className='text-black'/>
+              <Footer.Title title="Sách Điện Tử Việt" className='text-black'/>
               <Footer.LinkGroup col>
                 <Footer.Link href="#" className='text-black'>Facebook</Footer.Link>
                 <Footer.Link href="#" className='text-black'>Instagram</Footer.Link>
