@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import { AuthContext } from "../contects/AuthProvider";
-import { Navigate, useLocation } from "react-router-dom";
+import { AuthContext } from "../contacts/AuthProvider";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { Spinner } from "flowbite-react";
 
 const PrivateRoute = ({ children }) => {
@@ -16,10 +16,10 @@ const PrivateRoute = ({ children }) => {
   }
 
   if (user) {
-    return children;
+    return <Outlet />;
   }
 
-  return <Navigate to="/login" state={{ from: location }} replace></Navigate>;
+  return <Navigate to="/login" replace />;
 };
 
 export default PrivateRoute;

@@ -296,7 +296,6 @@ const SingleBook = () => {
         </table>
       </div>
     </div>
-  )
-}
-
-export default SingleBook
+  );
+};
+export default SingleBook;

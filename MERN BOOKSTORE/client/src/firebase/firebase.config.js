@@ -10,7 +10,7 @@ const firebaseConfig = {
   projectId: "mern-bookstore",
   storageBucket: "mern-bookstore.appspot.com",
   messagingSenderId: "983863300497",
-  appId: "1:983863300497:web:08779bd2d42b02f96a4a30"
+  appId: "1:983863300497:web:08779bd2d42b02f96a4a30",
 };
 
 // Initialize Firebase

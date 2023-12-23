@@ -1,11 +1,7 @@
-import {
-    createBrowserRouter,
-    RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import App from "../App";
 import Home from "../home/Home";
 import Shop from "../shop/Shop";
-import About from "../components/About";
 import Author from "../components/Author";
 import AuthorDetail from "../components/AuthorDetail";
 import SingleBook from "../shop/SingleBook";
@@ -14,27 +10,29 @@ import Dashboard from "../dashboard/Dashboard";
 import UploadBook from "../dashboard/UploadBook";
 import ManageBook from "../dashboard/ManageBook";
 import EditBook from "../dashboard/EditBook";
+// import Login from "../components/login";
+// import Signup from "../components/Signup";
 import CreateAuthor from "../dashboard/CreateAuthor";
 import EditAuthor from "../dashboard/EditAuthor";
 import ManageAuthor from "../dashboard/ManageAuthor";
 import SignIn from "../account/SignIn";
 import SignUp from "../account/SignUp";
-import Signup from "../components/Signup";
-import Login from "../components/login";
+import PrivateRoute from "../privateRoute/PrivateRoute";
 import Logout from "../components/Logout";
+import AuthProvider from "../contacts/AuthProvider";
 
 const router = createBrowserRouter([
-    {
+  {
+    path: "/",
+    element: <AuthProvider><App /></AuthProvider>,
+    children: [
+      {
         path: "/",
         element: <Home />,
       },
       {
         path: "/shop",
         element: <Shop />,
-      },
-      {
-        path: "/about",
-        element: <About/>
       },
       {
         path: "/author",
@@ -44,14 +42,14 @@ const router = createBrowserRouter([
       //   path: "/admin/dashboard/manage",
       //   element: <ManageBook />,
       // },
-      {
-        path: "/account/signin",
-        element: <SignIn />,
-      },
-      {
-        path: "/account/signup",
-        element: <SignUp />,
-      },
+      // {
+      //   path: "/account/signin",
+      //   element: <SignIn />,
+      // },
+      // {
+      //   path: "/account/signup",
+      //   element: <SignUp />,
+      // },
       {
         path: "/book/:id",
         element: <SingleBook />,
@@ -76,17 +74,18 @@ const router = createBrowserRouter([
         },
       },
     ],
-  {
-    path: "/Signup",
-    element: <Signup/>,
   },
   {
-    path: "/login",
-    element: <Login />,
+    path: "/account/signup",
+    element: <SignUp />,
+  },
+  {
+    path: "/account/signin",
+    element: <SignIn />,
   },
   {
     path: "/logout",
-    element: <Logout/>
+    element: <Logout />
   },
   {
     path: "/admin/dashboard",
@@ -94,7 +93,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/admin/dashboard",
-        element: <Dashboard />,
+        element: <PrivateRoute><Dashboard /></PrivateRoute>,
       },
       {
         path: "/admin/dashboard/upload-book",
@@ -128,6 +127,6 @@ const router = createBrowserRouter([
       },
     ],
   },
-);
+]);
 
 export default router;

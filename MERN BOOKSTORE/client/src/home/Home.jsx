@@ -5,10 +5,11 @@ import FavBook from './FavBook'
 import PromoBanner from './PromoBanner'
 import OtherBooks from './OtherBooks'
 import Review from './Review'
+import styles from '../Home.module.css'
 
 const Home = () => {
   return (
-    <div>
+    <div className={styles.home}>
         <Banner/>
         <BestSellerBooks/>
         <FavBook/>

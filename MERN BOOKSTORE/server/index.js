@@ -4,21 +4,24 @@ const port = process.env.PORT || 5000;
 const cors = require("cors");
 const bodyParser = require("body-parser");
 
-const dotenv = require("dotenv");
-dotenv.config();
+const passport = require('passport');
+app.use(passport.initialize());
+const bcrypt = require('bcrypt');
+const passportConfig = require('./passport-config');
 
 //middleware
 app.use(cors());
 app.use(express.json());
+app.use(bodyParser.json());
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
 
-
-const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = "mongodb+srv://MVPOmega:10161416@mvpcluster.kvnexas.mongodb.net/?retryWrites=true&w=majority";
-const { ObjectId } = require('mongodb');
+const { MongoClient, ServerApiVersion } = require("mongodb");
+const uri =
+  "mongodb+srv://MVPOmega:10161416@mvpcluster.kvnexas.mongodb.net/?retryWrites=true&w=majority";
+const { ObjectId } = require("mongodb");
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -26,28 +29,72 @@ const client = new MongoClient(uri, {
     version: ServerApiVersion.v1,
     strict: true,
     deprecationErrors: true,
-  }
+  },
 });
 
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
-    
+
     // Create a collection of documents
     const bookCollections = client.db("bookInvetory").collection("books");
+
+    const userCollections = client.db("bookInvetory").collection("userModel");
 
     // const authorCollections = client.db("bookInvetory").collection("authors");
     const authorCollections = client.db("authorList").collection("authors");
 
     const reviewCollections = client.db("bookInvetory").collection("reviews");
 
+    //Đăng ký tài khoản
+    app.post("/account/signup", async (req, res) => {
+      const data = req.body;
+
+      const existingUser = await userCollections.findOne({ username: data.username });
+      if (existingUser) {
+        return res.redirect('/signup?error=email_exists');
+      }
+
+      // Băm mật khẩu trước khi lưu vào database
+      const hashedPassword = await bcrypt.hash(data.password, 10);
+      data.password = hashedPassword;
+
+      const result = await userCollections.insertOne(data);
+      res.send(result);
+    });
+
+    //Passport
+    app.post("/account/signup", passport.authenticate('local', {
+      successRedirect: '/',
+      failureRedirect: '/signup',
+      failureFlash: true
+    }));
+
+    //Đăng nhập
+    app.post("/account/login", async (req, res) => {
+      const { username, password } = req.body;
+
+      const user = await userCollections.findOne({ username: username });
+      if (!user || !(await bcrypt.compare(password, user.password))) {
+        return res.render('login', { error: 'Tài khoản hoặc mật khẩu không đúng.' });
+      }
+    
+      res.redirect('/');
+    });
+
+    // app.post("/account/signup", async (req, res) => {
+    //   const data = req.body;
+    //   const result = await userCollections.insertOne(data);
+    //   res.send(result);
+    // });    
+
     //Book sector
     // Insert a book to the db: post method
-    app.post("/upload-book", async(req, res) => {
-        const data = req.body;
-        const result = await bookCollections.insertOne(data);
-        res.send(result);
+    app.post("/upload-books", async (req, res) => {
+      const data = req.body;
+      const result = await bookCollections.insertOne(data);
+      res.send(result);
     });
 
     // Get all books from the database
@@ -58,22 +105,26 @@ async function run() {
     // });
 
     // Update a book data: patch or update methods
-    app.patch("/book/:id", async(req, res) => {
-        const id = req.params.id;
-        const updateBookData = req.body;
-        const filter = {_id: new ObjectId(id)};
-        const updateDoc = {
-            $set: {
-                ...updateBookData
-            },
-        }
-        const options = {upsert: true};
-        // Update
-        const result = await bookCollections.updateOne(filter, updateDoc, options);
-        res.send(result);
+    app.patch("/book/:id", async (req, res) => {
+      const id = req.params.id;
+      const updateBookData = req.body;
+      const filter = { _id: new ObjectId(id) };
+      const updateDoc = {
+        $set: {
+          ...updateBookData,
+        },
+      };
+      const options = { upsert: true };
+      // Update
+      const result = await bookCollections.updateOne(
+        filter,
+        updateDoc,
+        options
+      );
+      res.send(result);
     });
 
-    // Delete a book data
+    //delete a book with id - HoangMinh
     app.delete("/delete-book/:id", async (req, res) => {
       try {
         const id = req.params.id;
@@ -87,14 +138,39 @@ async function run() {
     });
 
     // Find by category
-    app.get("/all-books", async(req, res) => {
+    // app.get("/all-books", async (req, res) => {
+    //   let query = {};
+    //   if (req.query && req.query.category) {
+    //     query = { category: req.query.category };
+    //   }
+    //   const result = await bookCollections.find(query).toArray();
+    //   res.send(result);
+    // });
+
+    app.get("/all-books", async (req, res) => {
+      try {
         let query = {};
-        if(req.query && req.query.category) {
-            query = {category: req.query.category}
+
+        // Check if there's a category parameter in the query
+        if (req.query && req.query.category) {
+          query.category = req.query.category;
         }
+
+        // Check if there's a title parameter in the query
+        if (req.query && req.query.title) {
+          query = {
+            ...query,
+            title: { $regex: new RegExp(req.query.title, "i") },
+          };
+        }
+
         const result = await bookCollections.find(query).toArray();
         res.send(result);
-    })
+      } catch (error) {
+        console.error("Error fetching books:", error);
+        res.status(500).send("Internal Server Error");
+      }
+    });
 
     // To get single book data
     // app.get("/book/:id", async (req, res) => {
@@ -173,8 +249,20 @@ async function run() {
     // Update author data: patch methods
     app.patch("/author/:id", async (req, res) => {
       const id = req.params.id;
-      const filter = {_id: new ObjectId(id)};
-      const result = await bookCollections.findOne(filter);
+      const updateAuthor = req.body;
+      const filter = { _id: new ObjectId(id) };
+      const updateDoc = {
+        $set: {
+          ...updateAuthor,
+        },
+      };
+      const options = { upsert: true };
+      // Update
+      const result = await authorCollections.updateOne(
+        filter,
+        updateDoc,
+        options
+      );
       res.send(result);
     });
 
@@ -284,7 +372,9 @@ async function run() {
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+    console.log(
+      "Pinged your deployment. You successfully connected to MongoDB!"
+    );
   } finally {
     // Ensures that the client will close when you finish/error
     //await client.close();
@@ -292,7 +382,6 @@ async function run() {
 }
 run().catch(console.dir);
 
-
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+  console.log(`Example app listening on port ${port}`);
+});

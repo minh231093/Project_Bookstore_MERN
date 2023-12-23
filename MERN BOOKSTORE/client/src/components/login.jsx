@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom';
-import { AuthContext } from '../contects/AuthProvider';
+import { AuthContext } from '../contacts/AuthProvider';
 import googleLogo from '../assets/banner-img/googleLogo.png'
 
 const Login = () => {

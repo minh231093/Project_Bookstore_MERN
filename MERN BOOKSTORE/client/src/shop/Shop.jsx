@@ -1,9 +1,145 @@
-import React from 'react'
+import { useEffect, useState } from "react";
+import { Card } from "flowbite-react";
+import { Link, useNavigate } from "react-router-dom";
+import { Input, Ripple, initMDB } from "mdb-ui-kit";
+import { Pagination } from "react-bootstrap";
+
+initMDB({ Input, Ripple });
 
 const Shop = () => {
+  const [books, setBooks] = useState([]);
+
+  const categories = [
+    "Science",
+    "Fiction",
+    "History",
+    "Literature",
+    "Art",
+    "Classic",
+    "Fantasy",
+    "Technology",
+    "Adventure",
+    "Travel",
+    "Novel",
+    "Religion",
+    "Mystery",
+    "Crime",
+    "Children",
+  ];
+
+  const [searchTitle, setSearchTitle] = useState("");
+  const [searchCategory, setSearchCategory] = useState("");
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [currentSearchMode, setCurrentSearchMode] = useState("");
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    retrieveBooks();
+  }, [currentPage, currentSearchMode]);
+
+  const booksPerPage = 12;
+
+  const onPageChange = (page) => {
+    setCurrentPage(page);
+    navigate(`/shop?page=${page}`, { replace: true });
+  };
+
+  const handleSearchByTitle = () => {
+    setCurrentPage(1);
+    setCurrentSearchMode("findByTitle");
+    findByTitle(searchTitle);
+  };
+
+  const handleSearchByCategory = () => {
+    setCurrentPage(1);
+    setCurrentSearchMode("findByCategory");
+    findByCategories([searchCategory]);
+  };
+
+  const onChangeSearchTitle = (e) => {
+    setSearchTitle(e.target.value);
+  };
+
+  const onChangeSearchCategory = (e) => {
+    setSearchCategory(e.target.value);
+  };
+
+  const findByCategories = async (categories) => {
+    try {
+      const response = await fetch("http://localhost:5000/books-by-category", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ categories }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Can't find anything");
+      }
+
+      const data = await response.json();
+      setBooks(data);
+    } catch (error) {
+      console.error("Error fetching books by category:", error);
+    }
+  };
+
+  const findByTitle = async (title) => {
+    console.log("Title:", title);
+    try {
+      const response = await fetch(
+        `http://localhost:5000/books-by-title/${title}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Can't find anything");
+      }
+
+      const data = await response.json();
+      setBooks(data);
+    } catch (error) {
+      console.error("Error fetching books by title:", error);
+    }
+  };
+
+  const retrieveBooks = () => {
+    if (currentSearchMode === "findByCategory") {
+      findByCategories([searchCategory]);
+    } else if (currentSearchMode === "findByTitle") {
+      findByTitle(searchTitle);
+    } else {
+      const apiUrl = `http://localhost:5000/all-books?page=${currentPage}&title=${searchTitle}&category=${searchCategory}&searchMode=${currentSearchMode}`;
+
+      fetch(apiUrl)
+        .then((res) => res.json())
+        .then((data) => {
+          setBooks(data);
+        })
+        .finally(() => {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+    }
+  };
+
+  const startIndex = (currentPage - 1) * booksPerPage;
+  const visibleBooks = books.slice(startIndex, startIndex + booksPerPage);
+
   return (
-    <div>
-      <div>
+    <div className="mt-28 px-4 lg:px-24">
+      <h2 className="text-5xl font-bold text-center">Danh mục sách</h2>
+      <div className="row mb-3">
+        {/* tìm theo tên sách */}
+        <div className="col-md-6"></div>
+
         <div className="input-group">
           <div className="form-outline" data-mdb-input-init>
             <input
