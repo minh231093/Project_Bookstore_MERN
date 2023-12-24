@@ -14,7 +14,7 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
 
-app.get("/", (req, res) => {
+app.get("/api/v1/", (req, res) => {
   res.send("Hello World!");
 });
 
@@ -48,14 +48,14 @@ async function run() {
     const reviewCollections = client.db("bookInvetory").collection("reviews");
 
     //Đăng ký tài khoản
-    app.post("/account/signup", async (req, res) => {
+    app.post("/api/v1/account/signup", async (req, res) => {
       const data = req.body;
 
       const existingUser = await userCollections.findOne({
         username: data.username,
       });
       if (existingUser) {
-        return res.redirect("/signup?error=email_exists");
+        return res.redirect("/api/v1/signup?error=email_exists");
       }
 
       // Băm mật khẩu trước khi lưu vào database
@@ -70,7 +70,7 @@ async function run() {
 
     //Passport
     app.post(
-      "/account/signup",
+      "/api/v1/account/signup",
       passport.authenticate("local", {
         successRedirect: "/",
         failureRedirect: "/signup",
@@ -79,7 +79,7 @@ async function run() {
     );
 
     //Đăng nhập
-    app.post("/account/login", async (req, res) => {
+    app.post("/api/v1/account/login", async (req, res) => {
       const { username, password } = req.body;
 
       const user = await userCollections.findOne({ username: username });
@@ -100,7 +100,7 @@ async function run() {
 
     //Book sector
     // Insert a book to the db: post method
-    app.post("/upload-books", async (req, res) => {
+    app.post("/api/v1/upload-books", async (req, res) => {
       const data = req.body;
       const result = await bookCollections.insertOne(data);
       res.send(result);
@@ -114,7 +114,7 @@ async function run() {
     // });
 
     // Update a book data: patch or update methods
-    app.patch("/book/:id", async (req, res) => {
+    app.patch("/api/v1/book/:id", async (req, res) => {
       const id = req.params.id;
       const updateBookData = req.body;
       const filter = { _id: new ObjectId(id) };
@@ -134,7 +134,7 @@ async function run() {
     });
 
     //delete a book with id - HoangMinh
-    app.delete("/delete-book/:id", async (req, res) => {
+    app.delete("/api/v1/delete-book/:id", async (req, res) => {
       try {
         const id = req.params.id;
         const filter = { _id: new ObjectId(id) };
@@ -156,7 +156,7 @@ async function run() {
     //   res.send(result);
     // });
 
-    app.get("/all-books", async (req, res) => {
+    app.get("/api/v1/all-books", async (req, res) => {
       try {
         let query = {};
 
@@ -189,7 +189,7 @@ async function run() {
     //   res.send(result);
     // });
 
-    app.get("/book/:id", async (req, res) => {
+    app.get("/api/v1/book/:id", async (req, res) => {
       try {
         const id = req.params.id;
         const filter = { _id: new ObjectId(id) };
@@ -216,7 +216,7 @@ async function run() {
     });
 
     // Lấy danh sách sách theo categories
-    app.post("/books-by-category", async (req, res) => {
+    app.post("/api/v1/books-by-category", async (req, res) => {
       try {
         const { categories } = req.body;
 
@@ -232,7 +232,7 @@ async function run() {
     });
 
     //Lấy danh sách sách theo title
-    app.get("/books-by-title/:title", async (req, res) => {
+    app.get("/api/v1/books-by-title/:title", async (req, res) => {
       try {
         const title = req.params.title;
 
@@ -249,14 +249,14 @@ async function run() {
 
     // Author HMinh/TTuyen
     // Insert book author to db: post method
-    app.post("/create-author", async (req, res) => {
+    app.post("/api/v1/create-author", async (req, res) => {
       const data = req.body;
       const result = await authorCollections.insertOne(data);
       res.send(result);
     });
 
     // Update author data: patch methods
-    app.patch("/author/:id", async (req, res) => {
+    app.patch("/api/v1/author/:id", async (req, res) => {
       const id = req.params.id;
       const updateAuthor = req.body;
       const filter = { _id: new ObjectId(id) };
@@ -276,7 +276,7 @@ async function run() {
     });
 
     //delete an author with id HoangMinh
-    app.delete("/delete-author/:id", async (req, res) => {
+    app.delete("/api/v1/delete-author/:id", async (req, res) => {
       try {
         const id = req.params.id;
         const filter = { _id: new ObjectId(id) };
@@ -289,7 +289,7 @@ async function run() {
     });
 
     // Get single author data
-    app.get("/author/:id", async (req, res) => {
+    app.get("/api/v1/author/:id", async (req, res) => {
       const id = req.params.id;
       const filter = { _id: new ObjectId(id) };
       const result = await authorCollections.findOne(filter);
@@ -297,7 +297,7 @@ async function run() {
     });
 
     // Get all authors from the database
-    app.get("/all-authors", async (req, res) => {
+    app.get("/api/v1/all-authors", async (req, res) => {
       const authors = authorCollections.find();
       const result = await authors.toArray();
       res.send(result);
@@ -312,7 +312,7 @@ async function run() {
     //   res.send(result);
     // });
 
-    app.post("/add-review", async (req, res) => {
+    app.post("/api/v1/add-review", async (req, res) => {
       try {
         const data = req.body;
         console.log(data);
@@ -325,7 +325,7 @@ async function run() {
       }
     });
 
-    app.get("/reviews", async (req, res) => {
+    app.get("/api/v1/reviews", async (req, res) => {
       try {
         const bookId = req.query.bookId;
         const review = await reviewCollections
@@ -347,7 +347,7 @@ async function run() {
     // });
 
     // Update review data: patch methods
-    app.patch("/review/:id", async (req, res) => {
+    app.patch("/api/v1/review/:id", async (req, res) => {
       const id = req.params.id;
       const updateReview = req.body;
       const filter = { _id: new ObjectId(id) };
@@ -367,7 +367,7 @@ async function run() {
     });
 
     //delete an review with id HoangMinh
-    app.delete("/delete-review/:id", async (req, res) => {
+    app.delete("/api/v1/delete-review/:id", async (req, res) => {
       try {
         const id = req.params.id;
         const filter = { _id: new ObjectId(id) };
