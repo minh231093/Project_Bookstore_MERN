@@ -9,7 +9,7 @@ const ManageBook = () => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      fetch(`/user-books/${user.id}`)
+      fetch(`/api/v1/user-books/${user.id}`)
         .then((res) => res.json())
         .then((data) => setUserBooks(data));
     }
@@ -18,7 +18,7 @@ const ManageBook = () => {
   const [allBooks, setAllBooks] = useState([]);
 
   useEffect(() => {
-    fetch("/all-books")
+    fetch("/api/v1/all-books")
       .then((res) => res.json())
       .then((data) => setAllBooks(data));
   }, []);
@@ -28,7 +28,7 @@ const ManageBook = () => {
 
     if (userConfirm) {
       console.log(id);
-      fetch(`/delete-book/${id}`, {
+      fetch(`/api/v1/delete-book/${id}`, {
         method: "DELETE",
       })
         .then((res) => res.json())

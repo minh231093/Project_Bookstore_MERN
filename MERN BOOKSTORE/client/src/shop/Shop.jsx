@@ -90,7 +90,7 @@ const Shop = () => {
   const findByTitle = async (title) => {
     console.log("Title:", title);
     try {
-      const response = await fetch(`/books-by-title/${title}`, {
+      const response = await fetch(`/api/v1/books-by-title/${title}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -114,7 +114,7 @@ const Shop = () => {
     } else if (currentSearchMode === "findByTitle") {
       findByTitle(searchTitle);
     } else {
-      const apiUrl = `/all-books?page=${currentPage}&title=${searchTitle}&category=${searchCategory}&searchMode=${currentSearchMode}`;
+      const apiUrl = `/api/v1/all-books?page=${currentPage}&title=${searchTitle}&category=${searchCategory}&searchMode=${currentSearchMode}`;
 
       fetch(apiUrl)
         .then((res) => res.json())
@@ -189,7 +189,7 @@ const Shop = () => {
 
       <div className="grid gap-8 my-12 lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-3 grid-cols-1">
         {visibleBooks.map((book) => (
-          <Link key={book._id} to={{ pathname: `/book/${book._id}` }}>
+          <Link key={book._id} to={{ pathname: `/api/v1/book/${book._id}` }}>
             <Card
               key={book._id}
               className="max-w-xs auto text-center"

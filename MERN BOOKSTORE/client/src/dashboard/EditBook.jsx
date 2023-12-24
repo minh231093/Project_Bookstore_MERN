@@ -56,7 +56,7 @@ const EditBook = () => {
       bookPdfUrl: form.bookPdfUrl.value,
     };
 
-    fetch(`http://localhost:5000/book/${id}`, {
+    fetch(`/api/v1/book/${id}`, {
       method: "PATCH",
       headers: {
         "Content-type": "application/json",

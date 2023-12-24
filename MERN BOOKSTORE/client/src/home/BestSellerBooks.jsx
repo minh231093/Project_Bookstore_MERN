@@ -5,7 +5,7 @@ const BestSellerBooks = () => {
   const [books, setBooks] = useState([]);
 
   useEffect(() => {
-    fetch("/all-books")
+    fetch("/api/v1/all-books")
       .then((res) => res.json())
       .then((data) => setBooks(data.slice(0, 8)));
   }, []);

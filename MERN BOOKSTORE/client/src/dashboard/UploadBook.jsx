@@ -55,7 +55,7 @@ const UploadBook = () => {
 
     console.log(bookObj);
 
-    fetch("/upload-books", {
+    fetch("/api/v1/upload-books", {
       method: "POST",
       headers: {
         "Content-type": "application/json",

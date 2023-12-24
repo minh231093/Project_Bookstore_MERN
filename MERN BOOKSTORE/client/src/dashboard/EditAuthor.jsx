@@ -17,7 +17,7 @@ const EditAuthor = () => {
       authorBio: form.authorBio.value,
     };
 
-    fetch(`http://localhost:5000/author/${id}`, {
+    fetch(`/api/v1/author/${id}`, {
       method: "PATCH",
       headers: {
         "Content-type": "application/json",

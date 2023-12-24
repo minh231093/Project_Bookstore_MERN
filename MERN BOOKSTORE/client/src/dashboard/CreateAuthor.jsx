@@ -24,7 +24,7 @@ const CreateAuthor = () => {
 
     console.log(authorObj);
 
-    fetch("/create-author", {
+    fetch("/api/v1/create-author", {
       method: "POST",
       headers: {
         "Content-type": "application/json",

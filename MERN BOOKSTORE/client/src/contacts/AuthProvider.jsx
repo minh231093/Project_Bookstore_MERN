@@ -71,7 +71,7 @@ const AuthProvider = ({ children }) => {
   const createUser = async (username, password, userNickname) => {
     setLoading(true);
     try {
-      const response = await axios.post("/account/signup", {
+      const response = await axios.post("/api/v1/account/signup", {
         username,
         password,
         userNickname,
@@ -89,7 +89,7 @@ const AuthProvider = ({ children }) => {
   const login = async (username, password) => {
     setLoading(true);
     try {
-      const response = await axios.post("/account/login", {
+      const response = await axios.post("/api/v1/account/login", {
         username,
         password,
       });
@@ -117,7 +117,7 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get("/account/signin");
+        const response = await axios.get("/api/v1/account/signin");
         setUser(response.data);
       } catch (error) {
         console.error("Error fetching user data:", error);
