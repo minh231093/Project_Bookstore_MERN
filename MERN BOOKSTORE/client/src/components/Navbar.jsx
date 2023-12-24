@@ -9,9 +9,10 @@ import { useAuth } from "../contacts/AuthProvider";
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
-
+  const [user, setUser] = useState(localStorage.getItem("user"));
   const { isLoggedIn, logout } = useAuth();
 
+  console.log(user);
   // const [isUploadMenuOpen, setUploadMenuOpen] = useState(false);
 
   // Toggle Menu
@@ -37,18 +38,21 @@ const Navbar = () => {
 
   // navItems here
   const navItems = [
-    { link: 'Home', path: '/' },
-    { link: 'About', path: '/about' },
-    { link: 'Thế giới sách', path: '/shop' },
-    { link: 'Tác giả', path: '/author' },
+    { link: "Home", path: "/" },
+    { link: "About", path: "/about" },
+    { link: "Thế giới sách", path: "/shop" },
+    { link: "Tác giả", path: "/author" },
     ...(isLoggedIn
       ? [
-          { link: 'Quản lý sách', path: '/admin/dashboard' },
-          { link: 'Đăng xuất', path: '/logout' },
+          { link: "Quản lý sách", path: "/admin/dashboard" },
+          { link: "Đăng xuất", path: "/logout" },
         ]
       : [
-          { link: 'Đăng nhập', path: '/account/signin' },
-          { link: 'Tạo tài khoản', path: '/account/signup' },
+          {
+            link: user ? user : "Đăng nhập",
+            path: user ? "/logout" : "/account/signin",
+          },
+          { link: "Tạo tài khoản", path: "/account/signup" },
         ]),
   ];
 

@@ -4,10 +4,10 @@ const port = process.env.PORT || 5000;
 const cors = require("cors");
 const bodyParser = require("body-parser");
 
-const passport = require('passport');
+const passport = require("passport");
 app.use(passport.initialize());
-const bcrypt = require('bcrypt');
-const passportConfig = require('./passport-config');
+const bcrypt = require("bcrypt");
+const passportConfig = require("./passport-config");
 
 //middleware
 app.use(cors());
@@ -51,9 +51,11 @@ async function run() {
     app.post("/account/signup", async (req, res) => {
       const data = req.body;
 
-      const existingUser = await userCollections.findOne({ username: data.username });
+      const existingUser = await userCollections.findOne({
+        username: data.username,
+      });
       if (existingUser) {
-        return res.redirect('/signup?error=email_exists');
+        return res.redirect("/signup?error=email_exists");
       }
 
       // Băm mật khẩu trước khi lưu vào database
@@ -61,15 +63,20 @@ async function run() {
       data.password = hashedPassword;
 
       const result = await userCollections.insertOne(data);
-      res.send(result);
+      // console.log(result);
+      //res.send(result);
+      res.json({ userNickname: data.userNickname });
     });
 
     //Passport
-    app.post("/account/signup", passport.authenticate('local', {
-      successRedirect: '/',
-      failureRedirect: '/signup',
-      failureFlash: true
-    }));
+    app.post(
+      "/account/signup",
+      passport.authenticate("local", {
+        successRedirect: "/",
+        failureRedirect: "/signup",
+        failureFlash: true,
+      })
+    );
 
     //Đăng nhập
     app.post("/account/login", async (req, res) => {
@@ -77,17 +84,19 @@ async function run() {
 
       const user = await userCollections.findOne({ username: username });
       if (!user || !(await bcrypt.compare(password, user.password))) {
-        return res.render('login', { error: 'Tài khoản hoặc mật khẩu không đúng.' });
+        return res.render("login", {
+          error: "Tài khoản hoặc mật khẩu không đúng.",
+        });
       }
-    
-      res.redirect('/');
+      res.json({ userNickname: user.userNickname });
+      //  res.redirect("/");
     });
 
     // app.post("/account/signup", async (req, res) => {
     //   const data = req.body;
     //   const result = await userCollections.insertOne(data);
     //   res.send(result);
-    // });    
+    // });
 
     //Book sector
     // Insert a book to the db: post method

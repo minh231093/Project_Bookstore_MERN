@@ -42,7 +42,7 @@
 //     }, [])
 
 //     const authInfo = {
-//         user, 
+//         user,
 //         createUser,
 //         loginWithGoogle,
 //         loading,
@@ -59,8 +59,8 @@
 
 // export default AuthProvider
 
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { createContext, useContext, useEffect, useState } from "react";
+import axios from "axios";
 
 export const AuthContext = createContext();
 
@@ -68,53 +68,64 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const createUser = async (username, password) => {
+  const createUser = async (username, password, userNickname) => {
     setLoading(true);
     try {
-      const response = await axios.post('http://localhost:5000/account/signup', {
-        username,
-        password,
-      });
-      console.log(response.data);
-    } catch (error) {
-      console.error('Error creating user:', error);
-    } finally {
+      const response = await axios.post(
+        "http://localhost:5000/account/signup",
+        {
+          username,
+          password,
+          userNickname,
+        }
+      );
       setLoading(false);
+      return response;
+    } catch (error) {
+      console.error("Error creating user:", error);
     }
+    //finally {
+    //   setLoading(false);
+    // }
   };
 
   const login = async (username, password) => {
     setLoading(true);
     try {
-      const response = await axios.post('http://localhost:5000/account/signup', {
+      const response = await axios.post("http://localhost:5000/account/login", {
         username,
         password,
       });
+      setLoading(false);
+      return response;
       console.log(response.data);
     } catch (error) {
-      console.error('Error logging in:', error);
-    } finally {
-      setLoading(false);
+      console.error("Error logging in:", error);
     }
+    // finally {
+    //   setLoading(false);
+    // }
   };
 
   const logout = async () => {
     try {
-      await axios.post('http://localhost:5000/account/logout');
+      // await axios.post("http://localhost:5000/account/logout");
       setUser(null);
-      localStorage.removeItem('token');
+      localStorage.removeItem("user");
     } catch (error) {
-      console.error('Error logging out:', error);
+      console.error("Error logging out:", error);
     }
   };
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/account/signin');
+        const response = await axios.get(
+          "http://localhost:5000/account/signin"
+        );
         setUser(response.data);
       } catch (error) {
-        console.error('Error fetching user data:', error);
+        console.error("Error fetching user data:", error);
       } finally {
         setLoading(false);
       }
@@ -131,7 +142,9 @@ const AuthProvider = ({ children }) => {
     logout,
   };
 
-  return <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
+  );
 };
 
 export const useAuth = () => {
