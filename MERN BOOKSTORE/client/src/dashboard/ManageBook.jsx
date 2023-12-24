@@ -4,13 +4,12 @@ import { Link } from "react-router-dom";
 import { Table } from "react-bootstrap";
 
 const ManageBook = () => {
-
   const { isLoggedIn, user } = useAuth();
   const [userBooks, setUserBooks] = useState([]);
 
   useEffect(() => {
     if (isLoggedIn) {
-      fetch(`http://localhost:5000/user-books/${user.id}`)
+      fetch(`/user-books/${user.id}`)
         .then((res) => res.json())
         .then((data) => setUserBooks(data));
     }
@@ -19,7 +18,7 @@ const ManageBook = () => {
   const [allBooks, setAllBooks] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/all-books")
+    fetch("/all-books")
       .then((res) => res.json())
       .then((data) => setAllBooks(data));
   }, []);
@@ -29,7 +28,7 @@ const ManageBook = () => {
 
     if (userConfirm) {
       console.log(id);
-      fetch(`http://localhost:5000/delete-book/${id}`, {
+      fetch(`/delete-book/${id}`, {
         method: "DELETE",
       })
         .then((res) => res.json())

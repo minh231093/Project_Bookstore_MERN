@@ -6,7 +6,7 @@ const ManageAuthor = () => {
   const [allAuthors, setAllAuthors] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/all-authors")
+    fetch("/all-authors")
       .then((res) => res.json())
       .then((data) => setAllAuthors(data));
   }, []);
@@ -16,7 +16,7 @@ const ManageAuthor = () => {
 
     if (userConfirm) {
       console.log(id);
-      fetch(`http://localhost:5000/delete-author/${id}`, {
+      fetch(`/delete-author/${id}`, {
         method: "DELETE",
       })
         .then((res) => res.json())

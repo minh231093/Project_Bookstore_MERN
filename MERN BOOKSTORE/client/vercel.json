@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/v1/blogs/:path*",
+      "destination": "https://bookstoreserver.vercel.app/api/v1/blogs/:path*"
+    }
+  ]
+}

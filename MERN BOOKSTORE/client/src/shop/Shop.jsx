@@ -68,7 +68,7 @@ const Shop = () => {
 
   const findByCategories = async (categories) => {
     try {
-      const response = await fetch("http://localhost:5000/books-by-category", {
+      const response = await fetch("/books-by-category", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -90,15 +90,12 @@ const Shop = () => {
   const findByTitle = async (title) => {
     console.log("Title:", title);
     try {
-      const response = await fetch(
-        `http://localhost:5000/books-by-title/${title}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch(`/books-by-title/${title}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
       if (!response.ok) {
         throw new Error("Can't find anything");
@@ -117,7 +114,7 @@ const Shop = () => {
     } else if (currentSearchMode === "findByTitle") {
       findByTitle(searchTitle);
     } else {
-      const apiUrl = `http://localhost:5000/all-books?page=${currentPage}&title=${searchTitle}&category=${searchCategory}&searchMode=${currentSearchMode}`;
+      const apiUrl = `/all-books?page=${currentPage}&title=${searchTitle}&category=${searchCategory}&searchMode=${currentSearchMode}`;
 
       fetch(apiUrl)
         .then((res) => res.json())

@@ -24,7 +24,11 @@ import AuthProvider from "../contacts/AuthProvider";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <AuthProvider><App /></AuthProvider>,
+    element: (
+      <AuthProvider>
+        <App />
+      </AuthProvider>
+    ),
     children: [
       {
         path: "/",
@@ -54,9 +58,7 @@ const router = createBrowserRouter([
         path: "/book/:id",
         element: <SingleBook />,
         loader: async ({ params }) => {
-          const response = await fetch(
-            `http://localhost:5000/book/${params.id}`
-          );
+          const response = await fetch(`/book/${params.id}`);
           const data = await response.json();
           return data;
         },
@@ -66,9 +68,7 @@ const router = createBrowserRouter([
         path: "/author/:id",
         element: <AuthorDetail />,
         loader: async ({ params }) => {
-          const response = await fetch(
-            `http://localhost:5000/author/${params.id}`
-          );
+          const response = await fetch(`/author/${params.id}`);
           const data = await response.json();
           return data;
         },
@@ -85,7 +85,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/logout",
-    element: <Logout />
+    element: <Logout />,
   },
   {
     path: "/admin/dashboard",
@@ -93,7 +93,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/admin/dashboard",
-        element: <PrivateRoute><Dashboard /></PrivateRoute>,
+        element: (
+          <PrivateRoute>
+            <Dashboard />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/admin/dashboard/upload-book",
@@ -106,8 +110,7 @@ const router = createBrowserRouter([
       {
         path: "/admin/dashboard/edit-book/:id",
         element: <EditBook />,
-        loader: ({ params }) =>
-          fetch(`http://localhost:5000/book/${params.id}`),
+        loader: ({ params }) => fetch(`/book/${params.id}`),
       },
 
       {
@@ -122,8 +125,7 @@ const router = createBrowserRouter([
       {
         path: "/admin/dashboard/edit-author/:id",
         element: <EditAuthor />,
-        loader: ({ params }) =>
-          fetch(`http://localhost:5000/author/${params.id}`),
+        loader: ({ params }) => fetch(`/author/${params.id}`),
       },
     ],
   },

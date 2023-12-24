@@ -24,7 +24,7 @@ const CreateAuthor = () => {
 
     console.log(authorObj);
 
-    fetch("http://localhost:5000/create-author", {
+    fetch("/create-author", {
       method: "POST",
       headers: {
         "Content-type": "application/json",

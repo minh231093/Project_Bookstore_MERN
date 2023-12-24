@@ -59,7 +59,7 @@
 
 // export default AuthProvider
 
-import React, { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 
 export const AuthContext = createContext();
@@ -71,14 +71,11 @@ const AuthProvider = ({ children }) => {
   const createUser = async (username, password, userNickname) => {
     setLoading(true);
     try {
-      const response = await axios.post(
-        "http://localhost:5000/account/signup",
-        {
-          username,
-          password,
-          userNickname,
-        }
-      );
+      const response = await axios.post("/account/signup", {
+        username,
+        password,
+        userNickname,
+      });
       setLoading(false);
       return response;
     } catch (error) {
@@ -92,7 +89,7 @@ const AuthProvider = ({ children }) => {
   const login = async (username, password) => {
     setLoading(true);
     try {
-      const response = await axios.post("http://localhost:5000/account/login", {
+      const response = await axios.post("/account/login", {
         username,
         password,
       });
@@ -109,7 +106,7 @@ const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      // await axios.post("http://localhost:5000/account/logout");
+      // await axios.post("/account/logout");
       setUser(null);
       localStorage.removeItem("user");
     } catch (error) {
@@ -120,9 +117,7 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:5000/account/signin"
-        );
+        const response = await axios.get("/account/signin");
         setUser(response.data);
       } catch (error) {
         console.error("Error fetching user data:", error);
