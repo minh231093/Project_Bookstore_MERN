@@ -43,7 +43,7 @@ const Shop = () => {
 
   const onPageChange = (page) => {
     setCurrentPage(page);
-    navigate(`/shop?page=${page}`, { replace: true });
+    navigate(`/api/v1/shop?page=${page}`, { replace: true });
   };
 
   const handleSearchByTitle = () => {
@@ -68,7 +68,7 @@ const Shop = () => {
 
   const findByCategories = async (categories) => {
     try {
-      const response = await fetch("/books-by-category", {
+      const response = await fetch("/api/v1/books-by-category", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

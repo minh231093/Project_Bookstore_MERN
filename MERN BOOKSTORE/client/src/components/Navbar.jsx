@@ -44,8 +44,8 @@ const Navbar = () => {
           { link: "Đăng xuất", path: "/logout" },
         ]
       : [
-          { link: "Đăng nhập", path: "/login" },
-          { link: "Tạo tài khoản", path: "/signup" },
+          { link: "Đăng nhập", path: "/account/signin" },
+          { link: "Tạo tài khoản", path: "/account/signup" },
         ]),
   ];
 

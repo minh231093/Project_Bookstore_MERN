@@ -1,4 +1,4 @@
-import { createBrowserRouter, Navigate } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
 import Home from "../home/Home";
 import Shop from "../shop/Shop";
@@ -20,7 +20,7 @@ import SignUp from "../account/SignUp";
 import PrivateRoute from "../privateroute/PrivateRoute";
 import Logout from "../components/Logout";
 import AuthProvider from "../contacts/AuthProvider";
-import AboutUs from "../home/AboutUs";
+// import AboutUs from "../home/AboutUs";
 import About from "../components/About";
 
 const router = createBrowserRouter([
@@ -82,11 +82,11 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/signup",
+    path: "/account/signup",
     element: <SignUp />,
   },
   {
-    path: "/signin",
+    path: "/account/signin",
     element: <SignIn />,
   },
   {
