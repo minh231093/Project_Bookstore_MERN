@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../contacts/AuthProvider";
 import googleLogo from "../assets/banner-img/googleLogo.png";
-import Service from "../routers/service";
+// import Service from "../routers/service";
 
 const Login = () => {
   const { login, loginWithGoogle } = useContext(AuthContext);
@@ -32,7 +32,7 @@ const Login = () => {
         serError(errorMessage);
       });
 
-    Service.createUser(email, password)
+    createUser(email, password)
       .then((userCredential) => {
         // Signed up
         const user = userCredential.user;

@@ -20,7 +20,6 @@ import SignUp from "../account/SignUp";
 import PrivateRoute from "../privateroute/PrivateRoute";
 import Logout from "../components/Logout";
 import AuthProvider from "../contacts/AuthProvider";
-// import AboutUs from "../home/AboutUs";
 import About from "../components/About";
 
 const router = createBrowserRouter([
@@ -61,7 +60,7 @@ const router = createBrowserRouter([
       //   element: <SignUp />,
       // },
       {
-        path: "/book/:id",
+        path: "/api/v1/book/:id",
         element: <SingleBook />,
         loader: async ({ params }) => {
           const response = await fetch(`/api/v1/book/${params.id}`);
