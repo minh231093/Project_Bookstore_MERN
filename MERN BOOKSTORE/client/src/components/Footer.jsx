@@ -1,9 +1,15 @@
-import { Footer } from 'flowbite-react';
-import { BsDribbble, BsFacebook, BsGithub, BsInstagram, BsTwitter } from 'react-icons/bs';
+import { Footer } from "flowbite-react";
+import {
+  BsDribbble,
+  BsFacebook,
+  BsGithub,
+  BsInstagram,
+  BsTwitter,
+} from "react-icons/bs";
 
 const MyFooter = () => {
   return (
-    <Footer container className=' bg-blue-300'>
+    <Footer container className=" bg-blue-300">
       <div className="w-full px-4 lg:px-2">
         <div className="grid w-full justify-between sm:flex sm:justify-between md:flex md:grid-cols-1">
           <div>
@@ -11,29 +17,41 @@ const MyFooter = () => {
               href="https://flowbite.com"
               src="https://flowbite.com/docs/images/logo.svg"
               alt="Flowbite Logo"
-              name="Books"
+              name="Sách Điện Tử Việt"
             />
           </div>
           <div className="grid grid-cols-2 gap-8 sm:mt-4 sm:grid-cols-3 sm:gap-6">
-            <div className='mr-16'>
-              <Footer.Title title="về chúng tôi" className='text-black'/>
+            <div className="mr-16">
+              <Footer.Title title="về chúng tôi" className="text-black" />
               <Footer.LinkGroup col>
-                <Footer.Link href="#" className='text-black'>Giới thiệu</Footer.Link>
-                <Footer.Link href="#" className='text-black'>Hệ thống nhà sách</Footer.Link>
+                <Footer.Link href="#" className="text-black">
+                  Giới thiệu
+                </Footer.Link>
+                <Footer.Link href="#" className="text-black">
+                  Hệ thống nhà sách
+                </Footer.Link>
               </Footer.LinkGroup>
             </div>
             <div>
-              <Footer.Title title="Sách Điện Tử Việt" className='text-black'/>
+              <Footer.Title title="Sách Điện Tử Việt" className="text-black" />
               <Footer.LinkGroup col>
-                <Footer.Link href="#" className='text-black'>Facebook</Footer.Link>
-                <Footer.Link href="#" className='text-black'>Instagram</Footer.Link>
+                <Footer.Link href="#" className="text-black">
+                  Facebook
+                </Footer.Link>
+                <Footer.Link href="#" className="text-black">
+                  Instagram
+                </Footer.Link>
               </Footer.LinkGroup>
             </div>
             <div>
-              <Footer.Title title="Hỗ trợ khách hàng" className='text-black'/>
+              <Footer.Title title="Hỗ trợ khách hàng" className="text-black" />
               <Footer.LinkGroup col>
-                <Footer.Link href="#" className='text-black'>Chính sách bảo mật</Footer.Link>
-                <Footer.Link href="#" className='text-black'>Điều khoản sử dụng</Footer.Link>
+                <Footer.Link href="#" className="text-black">
+                  Chính sách bảo mật
+                </Footer.Link>
+                <Footer.Link href="#" className="text-black">
+                  Điều khoản sử dụng
+                </Footer.Link>
               </Footer.LinkGroup>
             </div>
           </div>
@@ -51,7 +69,7 @@ const MyFooter = () => {
         </div>
       </div>
     </Footer>
-  )
-}
+  );
+};
 
-export default MyFooter
+export default MyFooter;

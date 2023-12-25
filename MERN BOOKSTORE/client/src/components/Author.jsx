@@ -7,7 +7,7 @@ const Author = () => {
   const [authors, setAuthors] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/all-authors")
+    fetch("/api/v1/all-authors")
       .then((res) => res.json())
       .then((data) => setAuthors(data));
   }, []);

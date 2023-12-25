@@ -79,7 +79,7 @@ async function run() {
     );
 
     //Đăng nhập
-    app.post("/api/v1/account/login", async (req, res) => {
+    app.post("/api/v1/account/signin", async (req, res) => {
       const { username, password } = req.body;
 
       const user = await userCollections.findOne({ username: username });

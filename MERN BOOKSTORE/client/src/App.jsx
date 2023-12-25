@@ -4,9 +4,9 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import TopBack from "./components/backToTop";
 import AuthProvider from "./contacts/AuthProvider";
-import { useState } from "react";
+// import { useState } from "react";
 
-function App() {  
+function App() {
   // const [user, setUser] = useState(true);
 
   // // Hàm này sẽ được gọi khi người dùng đăng nhập thành công
@@ -22,7 +22,7 @@ function App() {
     <AuthProvider>
       <div className="min-h-screen">
         {/* <Navbar user={user} onLogin={handleLogin} onLogout={handleLogout}/> */}
-        <Navbar/>
+        <Navbar />
         <Outlet />
         <TopBack />
         <Footer />

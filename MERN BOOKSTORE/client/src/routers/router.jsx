@@ -17,9 +17,10 @@ import EditAuthor from "../dashboard/EditAuthor";
 import ManageAuthor from "../dashboard/ManageAuthor";
 import SignIn from "../account/SignIn";
 import SignUp from "../account/SignUp";
-import PrivateRoute from "../privateRoute/PrivateRoute";
+import PrivateRoute from "../privateroute/PrivateRoute";
 import Logout from "../components/Logout";
 import AuthProvider from "../contacts/AuthProvider";
+import About from "../components/About";
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/about",
+        element: <About />,
       },
       {
         path: "/shop",
@@ -58,7 +63,7 @@ const router = createBrowserRouter([
         path: "/book/:id",
         element: <SingleBook />,
         loader: async ({ params }) => {
-          const response = await fetch(`/book/${params.id}`);
+          const response = await fetch(`/api/v1/book/${params.id}`);
           const data = await response.json();
           return data;
         },
@@ -68,7 +73,7 @@ const router = createBrowserRouter([
         path: "/author/:id",
         element: <AuthorDetail />,
         loader: async ({ params }) => {
-          const response = await fetch(`/author/${params.id}`);
+          const response = await fetch(`/api/v1/author/${params.id}`);
           const data = await response.json();
           return data;
         },
@@ -76,11 +81,11 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/account/signup",
+    path: "/signup",
     element: <SignUp />,
   },
   {
-    path: "/account/signin",
+    path: "/signin",
     element: <SignIn />,
   },
   {
@@ -110,7 +115,7 @@ const router = createBrowserRouter([
       {
         path: "/admin/dashboard/edit-book/:id",
         element: <EditBook />,
-        loader: ({ params }) => fetch(`/book/${params.id}`),
+        loader: ({ params }) => fetch(`/api/v1/book/${params.id}`),
       },
 
       {
@@ -125,7 +130,7 @@ const router = createBrowserRouter([
       {
         path: "/admin/dashboard/edit-author/:id",
         element: <EditAuthor />,
-        loader: ({ params }) => fetch(`/author/${params.id}`),
+        loader: ({ params }) => fetch(`/api/v1/author/${params.id}`),
       },
     ],
   },

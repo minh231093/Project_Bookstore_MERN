@@ -1,6 +1,6 @@
 import { useState } from "react";
-import axios from "axios";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+// import axios from "axios";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../contacts/AuthProvider";
 //linh
 //import React from "react";
@@ -18,45 +18,6 @@ import {
   MDBIcon,
   MDBCheckbox,
 } from "mdb-react-ui-kit";
-// const SignUp = () => {
-//   const [username, setUsername] = useState('');
-//   const [password, setPassword] = useState('');
-
-//   const location = useLocation();
-//   const navigate = useNavigate();
-
-//   const from = location.state?.from?.pathname || "/";
-
-//   const handleSignup = async (e) => {
-//     try {
-//       e.preventDefault();
-//       const form = e.target;
-//       const username = form.username.value;
-//       const password = form.password.value;
-
-//       const userObj = { username, password };
-
-//       fetch("http://localhost:5000/account/signup", {
-//         method: "POST",
-//         headers: {
-//           "Content-type": "application/json",
-//         },
-//         body: JSON.stringify(userObj),
-//       })
-//         .then((res) => res.json())
-//         .then((data) => {
-//           alert("Đăng ký thành công");
-//           const token = data.token;
-//           localStorage.setItem('token', token);
-//           navigate("/");
-//         })
-//         .catch((error) => {
-//           console.error("Error during fetch:", error);
-//         });
-//     } catch (error) {
-//       console.error('Error submitting form:', error);
-//     }
-//   };
 
 const SignUp = () => {
   const { createUser } = useAuth();
@@ -85,27 +46,6 @@ const SignUp = () => {
   };
 
   return (
-    // <div className="mt-16">
-    //   <h2 className="py-8 text-5xl font-bold text-center md:text-center">
-    //     Đăng ký tại đây
-    //   </h2>
-
-    //   <form onSubmit={handleSignup}>
-    //     <input type="email" value={username} id="username" placeholder="Tài khoản" onChange={(e) => setUsername(e.target.value)} name="username"/>
-    //     <input type="password" value={password} id="password" placeholder="Mật khẩu" onChange={(e) => setPassword(e.target.value)} name="password"/>
-    //     <button>Signup</button>
-    //   </form>
-
-    //   <div>
-    //     <h2 className="text-center">
-    //       Chưa có tài khoản?{" "}
-    //       <Link to="/account/signup" className="text-red-400">
-    //         Đăng ký ngay
-    //       </Link>
-    //     </h2>
-    //   </div>
-    // </div>
-
     //linh
     <MDBContainer fluid>
       <MDBCard className="text-black m-5" style={{ borderRadius: "25px" }}>
@@ -117,7 +57,7 @@ const SignUp = () => {
               className="order-2 order-lg-1 d-flex flex-column align-items-center"
             >
               <form onSubmit={handleSignup}>
-                <p classNAme="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">
+                <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">
                   Sign up
                 </p>
 

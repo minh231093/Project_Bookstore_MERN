@@ -1,19 +1,15 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-// import { Dropdown } from "flowbite-react";
 
 // react icons
 import { FaBarsStaggered, FaBlog, FaXmark } from "react-icons/fa6";
-import { useAuth } from "../contacts/AuthProvider";
+import { AuthContext } from "../contacts/AuthProvider";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
-  const [user, setUser] = useState(localStorage.getItem("user"));
-  const { isLoggedIn, logout } = useAuth();
 
-  console.log(user);
-  // const [isUploadMenuOpen, setUploadMenuOpen] = useState(false);
+  const { user } = useContext(AuthContext);
 
   // Toggle Menu
   const ToggleMenu = () => {
@@ -42,17 +38,14 @@ const Navbar = () => {
     { link: "About", path: "/about" },
     { link: "Thế giới sách", path: "/shop" },
     { link: "Tác giả", path: "/author" },
-    ...(isLoggedIn
+    ...(user
       ? [
           { link: "Quản lý sách", path: "/admin/dashboard" },
           { link: "Đăng xuất", path: "/logout" },
         ]
       : [
-          {
-            link: user ? user : "Đăng nhập",
-            path: user ? "/logout" : "/account/signin",
-          },
-          { link: "Tạo tài khoản", path: "/account/signup" },
+          { link: "Đăng nhập", path: "/login" },
+          { link: "Tạo tài khoản", path: "/signup" },
         ]),
   ];
 
@@ -67,10 +60,10 @@ const Navbar = () => {
           {/* logo */}
           <Link
             to="/"
-            className="text-2x1 font-bold text-blue-700 flex items-center gap-2 nav-link"
+            className="text-2x1 font-bold text-blue-700 flex items-center gap-2"
           >
             <FaBlog className="inline-block" />
-            Books
+            Sách Điện Tử Việt
           </Link>
 
           {/* nav items for large device */}
@@ -79,7 +72,7 @@ const Navbar = () => {
               <Link
                 key={path}
                 to={path}
-                className="block text-base text-black uppercase cursor-pointer hover:text-blue-700 nav-link"
+                className="block text-base text-black uppercase cursor-pointer hover:text-blue-700"
               >
                 {link}
               </Link>
@@ -117,7 +110,7 @@ const Navbar = () => {
               <Link
                 key={path}
                 to={path}
-                className="block text-base text-white uppercase cursor-pointer nav-link"
+                className="block text-base text-white uppercase cursor-pointer"
               >
                 {link}
               </Link>

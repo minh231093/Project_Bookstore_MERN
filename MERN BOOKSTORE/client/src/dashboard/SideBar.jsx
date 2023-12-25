@@ -9,14 +9,7 @@ export const SideBar = () => {
         aria-label="Sidebar with logo branding example"
         style={{ marginTop: "80px" }}
       >
-        <Sidebar.Logo
-          as={Link}
-          to="/"
-          img="/favicon.svg"
-          imgAlt="Flowbite logo"
-        >
-          Book Store
-        </Sidebar.Logo>
+        Book Store
         <Sidebar.Items>
           <Sidebar.ItemGroup>
             <Sidebar.Item as={Link} to="/admin/dashboard/manage">
