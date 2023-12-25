@@ -21,6 +21,7 @@ import PrivateRoute from "../privateroute/PrivateRoute";
 import Logout from "../components/Logout";
 import AuthProvider from "../contacts/AuthProvider";
 import AboutUs from "../home/AboutUs";
+import About from "../components/About";
 
 const router = createBrowserRouter([
   {
@@ -37,7 +38,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/about",
-        element: <AboutUs />,
+        element: <About />,
       },
       {
         path: "/shop",
