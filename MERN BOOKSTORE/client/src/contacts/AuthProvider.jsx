@@ -82,6 +82,7 @@ const AuthProvider = ({ children }) => {
         userNickname,
       });
       setLoading(false);
+      setUser(response.data);
       return response;
     } catch (error) {
       console.error("Error creating user:", error);
@@ -100,6 +101,7 @@ const AuthProvider = ({ children }) => {
       });
       console.log(response.data);
       setLoading(false);
+      setUser(response.data);
       return response;
     } catch (error) {
       console.error("Error logging in:", error);
@@ -121,8 +123,13 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get("/api/v1/account/signin");
-        setUser(response.data);
+        // const response = await axios.get("/api/v1/account/signin");
+        const nickname = localStorage.getItem("user");
+        if (nickname) {
+          setUser({ userNickname: nickname });
+        } else {
+          setUser(null);
+        }
       } catch (error) {
         console.error("Error fetching user data:", error);
       } finally {

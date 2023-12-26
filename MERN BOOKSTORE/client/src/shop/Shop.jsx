@@ -43,9 +43,8 @@ const Shop = () => {
 
   const onPageChange = (page) => {
     setCurrentPage(page);
-    navigate(`/api/v1/shop?page=${page}`, { replace: true });
+    navigate(`/shop?page=${page}`, { replace: true });
   };
-
   const handleSearchByTitle = () => {
     setCurrentPage(1);
     setCurrentSearchMode("findByTitle");
@@ -187,9 +186,9 @@ const Shop = () => {
         </div>
       </div>
 
-      <div className="grid gap-8 my-12 lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-3 grid-cols-1">
+      <div className="grid gap-2 my-12 lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-3 grid-cols-1">
         {visibleBooks.map((book) => (
-          <Link key={book._id} to={{ pathname: `/api/v1/book/${book._id}` }}>
+          <Link key={book._id} to={{ pathname: `/book/${book._id}` }}>
             <Card
               key={book._id}
               className="max-w-xs auto text-center"
@@ -204,7 +203,13 @@ const Shop = () => {
               </h5>
               <p
                 className="font-normal text-gray-700 dark:text-gray-400 description book-card px-1"
-                style={{ textDecoration: "none" }}
+                style={{
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  display: "-webkit-box",
+                  WebkitLineClamp: 3,
+                  WebkitBoxOrient: "vertical",
+                }}
               >
                 {book.bookDescription}
               </p>
@@ -234,7 +239,21 @@ const Shop = () => {
                 onClick={() => onPageChange(page + 1)}
               >
                 {page + 1}
-                <span className="visually-hidden">(current)</span>
+                <span
+                  className="visually-hidden"
+                  style={{
+                    position: "absolute",
+                    width: "1px",
+                    height: "1px",
+                    margin: "-1px",
+                    padding: "0",
+                    overflow: "hidden",
+                    clip: "rect(0, 0, 0, 0)",
+                    border: "0",
+                  }}
+                >
+                  (current)
+                </span>
               </Pagination.Item>
             )
           )}

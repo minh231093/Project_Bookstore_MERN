@@ -142,8 +142,8 @@ const SingleBook = () => {
         className="card"
         style={{
           border: "none",
-          minHeight: "800px",
-          minWidth: "450px",
+          height: "800px",
+          width: "450px",
           marginRight: "50px",
         }}
       >

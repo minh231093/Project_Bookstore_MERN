@@ -60,7 +60,7 @@ const router = createBrowserRouter([
       //   element: <SignUp />,
       // },
       {
-        path: "/api/v1/book/:id",
+        path: "/book/:id",
         element: <SingleBook />,
         loader: async ({ params }) => {
           const response = await fetch(`/api/v1/book/${params.id}`);
@@ -81,11 +81,11 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/account/signup",
+    path: "/signup",
     element: <SignUp />,
   },
   {
-    path: "/account/signin",
+    path: "/signin",
     element: <SignIn />,
   },
   {
