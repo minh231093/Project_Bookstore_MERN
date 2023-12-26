@@ -38,6 +38,7 @@ const Navbar = () => {
     { link: "About", path: "/about" },
     { link: "Thế giới sách", path: "/shop" },
     { link: "Tác giả", path: "/author" },
+    { link: "Mua sách", path: "/BuyYourBook/Shopping" },
     ...(user
       ? [
           { link: "Quản lý sách", path: "/admin/dashboard" },

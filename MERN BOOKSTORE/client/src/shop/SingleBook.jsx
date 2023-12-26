@@ -84,7 +84,6 @@ const SingleBook = () => {
 
   //
 
-  // Trong hàm SingleBook
   const handleEditReview = async (reviewId) => {
     try {
       // Lấy danh sách reviews từ server

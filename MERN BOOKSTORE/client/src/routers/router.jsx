@@ -21,6 +21,9 @@ import PrivateRoute from "../privateroute/PrivateRoute";
 import Logout from "../components/Logout";
 import AuthProvider from "../contacts/AuthProvider";
 import About from "../components/About";
+import Cart from "../BuyYourBook/Cart";
+import CheckoutPage from "../BuyYourBook/CheckoutPage";
+import Shopping from "../BuyYourBook/Shopping";
 
 const router = createBrowserRouter([
   {
@@ -67,6 +70,24 @@ const router = createBrowserRouter([
           const data = await response.json();
           return data;
         },
+      },
+
+      {
+        path: "/BuyYourBook/CheckoutPage",
+        element: <CheckoutPage />,
+      },
+      {
+        path: "/orderbook/:id",
+        element: <Cart />,
+        loader: async ({ params }) => {
+          const response = await fetch(`/api/v1/book/${params.id}`);
+          const data = await response.json();
+          return data;
+        },
+      },
+      {
+        path: "/BuyYourBook/Shopping",
+        element: <Shopping />,
       },
 
       {

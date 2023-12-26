@@ -56,7 +56,9 @@ async function run() {
           username: data.username,
         });
         if (existingUser) {
-          return res.status(400).json({ success: false, message: "user exists" });
+          return res
+            .status(400)
+            .json({ success: false, message: "user exists" });
         }
 
         // Băm mật khẩu trước khi lưu vào database
@@ -68,7 +70,9 @@ async function run() {
         //res.send(result);
         res.json({ userNickname: data.userNickname });
       } catch (e) {
-        res.status(400).json({ success: false, message: `data: ${data} is not valid` })
+        res
+          .status(400)
+          .json({ success: false, message: `data: ${data} is not valid` });
       }
     });
 
@@ -89,7 +93,10 @@ async function run() {
 
       const user = await userCollections.findOne({ username: username });
       if (!user || !(await bcrypt.compare(password, user.password))) {
-        return res.status(400).json({ success: false, message: "Tai khoan hoac mat khau khong dung" });
+        return res.status(400).json({
+          success: false,
+          message: "Tai khoan hoac mat khau khong dung",
+        });
       }
       res.json({ userNickname: user.userNickname });
       //  res.redirect("/");
@@ -216,6 +223,17 @@ async function run() {
         console.error("Error fetching book by ID:", error);
         res.status(500).send("Internal Server Error");
       }
+    });
+
+    app.get("/api/v1/BuyYourBook", (req, res) => {
+      res.send("Welcome to the Shopping page!");
+    });
+
+    app.get("/api/v1/orderbook/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const result = await bookCollections.findOne(filter);
+      res.send(result);
     });
 
     // Lấy danh sách sách theo categories
@@ -398,4 +416,4 @@ app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
 
-module.exports = app
+module.exports = app;
